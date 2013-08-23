@@ -1,0 +1,318 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DDB2DD7C17C681C30077C18E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB2DD7B17C681C30077C18E /* Foundation.framework */; };
+		DDB2DD8617C681C30077C18E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DDB2DD8417C681C30077C18E /* InfoPlist.strings */; };
+		DDB2DD8817C681C30077C18E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2DD8717C681C30077C18E /* main.m */; };
+		DDB2DD8C17C681C30077C18E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB2DD8B17C681C30077C18E /* AppDelegate.m */; };
+		DDB2DD8E17C681C30077C18E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDB2DD8D17C681C30077C18E /* Images.xcassets */; };
+		DDB2DDB117C685610077C18E /* libsubstrate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */; };
+		DDCA01A617C8292D005A93D4 /* JGMethodHooker.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCA01A517C8292D005A93D4 /* JGMethodHooker.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		DDB2DD7817C681C30077C18E /* JGMethodHook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JGMethodHook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDB2DD7B17C681C30077C18E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		DDB2DD8317C681C30077C18E /* JGMethodHook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JGMethodHook-Info.plist"; sourceTree = "<group>"; };
+		DDB2DD8517C681C30077C18E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DDB2DD8717C681C30077C18E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DDB2DD8917C681C30077C18E /* JGMethodHook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JGMethodHook-Prefix.pch"; sourceTree = "<group>"; };
+		DDB2DD8A17C681C30077C18E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DDB2DD8B17C681C30077C18E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DDB2DD8D17C681C30077C18E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsubstrate.dylib; path = ../../../../../opt/theos/lib/libsubstrate.dylib; sourceTree = "<group>"; };
+		DDCA01A417C8292D005A93D4 /* JGMethodHooker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JGMethodHooker.h; sourceTree = "<group>"; };
+		DDCA01A517C8292D005A93D4 /* JGMethodHooker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JGMethodHooker.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DDB2DD7517C681C30077C18E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDB2DDB117C685610077C18E /* libsubstrate.dylib in Frameworks */,
+				DDB2DD7C17C681C30077C18E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		DDB2DD6F17C681C30077C18E = {
+			isa = PBXGroup;
+			children = (
+				DDB2DD8117C681C30077C18E /* JGMethodHook */,
+				DDB2DD7A17C681C30077C18E /* Frameworks */,
+				DDB2DD7917C681C30077C18E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		DDB2DD7917C681C30077C18E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DDB2DD7817C681C30077C18E /* JGMethodHook.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DDB2DD7A17C681C30077C18E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */,
+				DDB2DD7B17C681C30077C18E /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DDB2DD8117C681C30077C18E /* JGMethodHook */ = {
+			isa = PBXGroup;
+			children = (
+				DDB2DD8A17C681C30077C18E /* AppDelegate.h */,
+				DDB2DD8B17C681C30077C18E /* AppDelegate.m */,
+				DDCA01A417C8292D005A93D4 /* JGMethodHooker.h */,
+				DDCA01A517C8292D005A93D4 /* JGMethodHooker.m */,
+				DDB2DD8D17C681C30077C18E /* Images.xcassets */,
+				DDB2DD8217C681C30077C18E /* Supporting Files */,
+			);
+			path = JGMethodHook;
+			sourceTree = "<group>";
+		};
+		DDB2DD8217C681C30077C18E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DDB2DD8317C681C30077C18E /* JGMethodHook-Info.plist */,
+				DDB2DD8417C681C30077C18E /* InfoPlist.strings */,
+				DDB2DD8717C681C30077C18E /* main.m */,
+				DDB2DD8917C681C30077C18E /* JGMethodHook-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DDB2DD7717C681C30077C18E /* JGMethodHook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHook" */;
+			buildPhases = (
+				DDB2DD7417C681C30077C18E /* Sources */,
+				DDB2DD7517C681C30077C18E /* Frameworks */,
+				DDB2DD7617C681C30077C18E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JGMethodHook;
+			productName = JGMethodHook;
+			productReference = DDB2DD7817C681C30077C18E /* JGMethodHook.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DDB2DD7017C681C30077C18E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Jonas Gessner";
+			};
+			buildConfigurationList = DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHook" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = DDB2DD6F17C681C30077C18E;
+			productRefGroup = DDB2DD7917C681C30077C18E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DDB2DD7717C681C30077C18E /* JGMethodHook */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DDB2DD7617C681C30077C18E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDB2DD8617C681C30077C18E /* InfoPlist.strings in Resources */,
+				DDB2DD8E17C681C30077C18E /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DDB2DD7417C681C30077C18E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDB2DD8C17C681C30077C18E /* AppDelegate.m in Sources */,
+				DDCA01A617C8292D005A93D4 /* JGMethodHooker.m in Sources */,
+				DDB2DD8817C681C30077C18E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DDB2DD8417C681C30077C18E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DDB2DD8517C681C30077C18E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DDB2DDA217C681C40077C18E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DDB2DDA317C681C40077C18E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DDB2DDA517C681C40077C18E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JGMethodHook/JGMethodHook-Prefix.pch";
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				INFOPLIST_FILE = "JGMethodHook/JGMethodHook-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/theos/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		DDB2DDA617C681C40077C18E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JGMethodHook/JGMethodHook-Prefix.pch";
+				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
+				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
+				INFOPLIST_FILE = "JGMethodHook/JGMethodHook-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/opt/theos/lib,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "";
+				WARNING_CFLAGS = "-Wall";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDB2DDA217C681C40077C18E /* Debug */,
+				DDB2DDA317C681C40077C18E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDB2DDA517C681C40077C18E /* Debug */,
+				DDB2DDA617C681C40077C18E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DDB2DD7017C681C30077C18E /* Project object */;
+}
