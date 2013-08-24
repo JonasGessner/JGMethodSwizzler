@@ -120,7 +120,13 @@ typedef struct {
     
     NSLog(@"Test Class %@", [JGMethodHookerTestObject a:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
     
-    NSLog(@"Test Instance %@", [[JGMethodHookerTestObject new] a:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
+    JGMethodHookerTestObject *tester = [JGMethodHookerTestObject new];
+    
+    NSLog(@"Test Instance %@",  [tester a:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
+    
+#if !__has_feature(objc_arc)
+    [tester release];
+#endif
 }
 
 - (void)testHookWithTrampoline {
@@ -148,7 +154,13 @@ typedef struct {
     
     NSLog(@"Test Class %@", [JGMethodHookerTestObject b:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
     
-    NSLog(@"Test Instance %@", [[JGMethodHookerTestObject new] b:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
+    JGMethodHookerTestObject *tester = [JGMethodHookerTestObject new];
+    
+    NSLog(@"Test Instance %@",  [tester b:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
+    
+#if !__has_feature(objc_arc)
+    [tester release];
+#endif
 }
 
 - (void)testHookWithOrigPointer {
@@ -180,7 +192,13 @@ typedef struct {
     
     NSLog(@"Test Class %@", [JGMethodHookerTestObject c:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
     
-    NSLog(@"Test Instance %@", [[JGMethodHookerTestObject new] c:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
+    JGMethodHookerTestObject *tester = [JGMethodHookerTestObject new];
+    
+    NSLog(@"Test Instance %@",  [tester c:99 a:1 a:aa a:748659780798 a:@"Yeah!" a:(CGRect){{7, 8}, {9, 10}}]);
+    
+#if !__has_feature(objc_arc)
+    [tester release];
+#endif
 }
 
 - (void)test {
