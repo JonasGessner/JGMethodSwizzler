@@ -141,6 +141,8 @@ JGExtern JG_ORIG_IMP getOrig_C(id object, SEL selector);
  @param objectClass The class to hook.
  @param replacement The replacement block for the method that is hooked. Its signature should be: method_return_type ^(id self, method_args...).
  @param orig A pointer to a reference of the original implementation. Its signature is: method_return_type ^(id self, SEL cmd, method_args...). (optional)
+ 
+ @warning orig is required to have the __block attribute.
  */
 
 + (void)hookInstanceMethod:(SEL)selector ofClass:(Class)objectClass withReplacement:(JGHookBlock)replacement getOrig:(JG_ORIG_IMP *)orig;
@@ -153,6 +155,8 @@ JGExtern JG_ORIG_IMP getOrig_C(id object, SEL selector);
  @param objectClass The class to hook.
  @param replacement The replacement block for the method that is hooked. Its signature should be: method_return_type ^(id self, method_args...).
  @param orig A pointer to a reference of the original implementation. Its signature is: method_return_type ^(id self, SEL cmd, method_args...). (optional)
+ 
+ @warning orig is required to have the __block attribute.
  */
 
 + (void)hookClassMethod:(SEL)selector ofClass:(Class)objectClass withReplacement:(JGHookBlock)replacement getOrig:(JG_ORIG_IMP *)orig;
@@ -202,7 +206,7 @@ JGExtern JG_ORIG_IMP getOrig_C(id object, SEL selector);
  @param replacement The replacement block for the method that is hooked. Its signature should be: method_return_type ^(id self, method_args...).
  @param orig A pointer to a reference of the original implementation. Its signature is: method_return_type ^(id self, SEL cmd, method_args...). (optional)
  
- @warning orig requires a __block attribute.
+ @warning orig is required to have the __block attribute.
  */
 
 + (void)hookInstanceMethod:(SEL)selector usingBlock:(JGHookBlock)replacement getOrig:(JG_ORIG_IMP *)orig;
@@ -215,7 +219,7 @@ JGExtern JG_ORIG_IMP getOrig_C(id object, SEL selector);
  @param replacement The replacement block for the method that is hooked. Its signature should be: method_return_type ^(id self, method_args...).
  @param orig A pointer to a reference of the original implementation. Its signature is: method_return_type ^(id self, SEL cmd, method_args...). (optional)
  
- @warning orig requires a __block attribute.
+ @warning orig is required to have the __block attribute.
  */
 
 + (void)hookClassMethod:(SEL)selector usingBlock:(JGHookBlock)replacement getOrig:(JG_ORIG_IMP *)orig;
