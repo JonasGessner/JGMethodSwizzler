@@ -138,7 +138,7 @@ JG_ORIG_IMP getOrig_C(id object, SEL selector) {
 
     JG_ORIG_IMP origIMP = (JG_ORIG_IMP)[objectClass instanceMethodForSelector:selector];
     
-    NSAssert((origIMP != NULL && [objectClass respondsToSelector:selector]), @"Invalid method: -[%@ %@]", NSStringFromClass(objectClass), NSStringFromSelector(selector));
+    NSAssert((origIMP != NULL && [objectClass instancesRespondToSelector:selector]), @"Invalid method: -[%@ %@]", NSStringFromClass(objectClass), NSStringFromSelector(selector));
     
     if (orig) {
         *orig = origIMP;
