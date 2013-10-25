@@ -9,22 +9,21 @@
 /* Begin PBXBuildFile section */
 		DDB2DD7C17C681C30077C18E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB2DD7B17C681C30077C18E /* Foundation.framework */; };
 		DDB2DDB117C685610077C18E /* libsubstrate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */; };
-		DDCA01B217C83091005A93D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCA01A917C83091005A93D4 /* AppDelegate.m */; };
-		DDCA01B717C83091005A93D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCA01B117C83091005A93D4 /* main.m */; };
+		DDB4063C17CB60DA0004E696 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB4063517CB60DA0004E696 /* AppDelegate.m */; };
+		DDB4064517CB60FB0004E696 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB4064317CB60FB0004E696 /* main.m */; };
 		DDCA01BB17C830D0005A93D4 /* JGMethodHooker.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCA01BA17C830D0005A93D4 /* JGMethodHooker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DDB2DD7817C681C30077C18E /* JGMethodHookTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JGMethodHookTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDB2DD7817C681C30077C18E /* JGMethodHookerTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JGMethodHookerTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDB2DD7B17C681C30077C18E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsubstrate.dylib; path = ../../../../../opt/theos/lib/libsubstrate.dylib; sourceTree = "<group>"; };
-		DDCA01A817C83091005A93D4 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		DDCA01A917C83091005A93D4 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DDCA01AB17C83091005A93D4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DDCA01AC17C83091005A93D4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		DDCA01AD17C83091005A93D4 /* JGMethodHook-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "JGMethodHook-Info.plist"; sourceTree = "<group>"; };
-		DDCA01AE17C83091005A93D4 /* JGMethodHook-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JGMethodHook-Prefix.pch"; sourceTree = "<group>"; };
-		DDCA01B117C83091005A93D4 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		DDB4063417CB60DA0004E696 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		DDB4063517CB60DA0004E696 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		DDB4064117CB60FB0004E696 /* JGMethodHook-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "JGMethodHook-Info.plist"; path = "JGMethodHookerTests/JGMethodHook-Info.plist"; sourceTree = SOURCE_ROOT; };
+		DDB4064217CB60FB0004E696 /* JGMethodHook-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JGMethodHook-Prefix.pch"; path = "JGMethodHookerTests/JGMethodHook-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		DDB4064317CB60FB0004E696 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = JGMethodHookerTests/main.m; sourceTree = SOURCE_ROOT; };
+		DDB4064617CB61030004E696 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = JGMethodHookerTests/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		DDCA01B917C830D0005A93D4 /* JGMethodHooker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JGMethodHooker.h; path = JGMethodHooker/JGMethodHooker.h; sourceTree = SOURCE_ROOT; };
 		DDCA01BA17C830D0005A93D4 /* JGMethodHooker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JGMethodHooker.m; path = JGMethodHooker/JGMethodHooker.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -45,7 +44,7 @@
 		DDB2DD6F17C681C30077C18E = {
 			isa = PBXGroup;
 			children = (
-				DDCA01A717C83091005A93D4 /* JGMethodHookTests */,
+				DDB4063317CB60DA0004E696 /* JGMethodHookerTests */,
 				DDB2DD7A17C681C30077C18E /* Frameworks */,
 				DDB2DD7917C681C30077C18E /* Products */,
 			);
@@ -54,7 +53,7 @@
 		DDB2DD7917C681C30077C18E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DDB2DD7817C681C30077C18E /* JGMethodHookTests.app */,
+				DDB2DD7817C681C30077C18E /* JGMethodHookerTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -68,36 +67,36 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DDCA01A717C83091005A93D4 /* JGMethodHookTests */ = {
+		DDB4063317CB60DA0004E696 /* JGMethodHookerTests */ = {
 			isa = PBXGroup;
 			children = (
-				DDCA01A817C83091005A93D4 /* AppDelegate.h */,
-				DDCA01A917C83091005A93D4 /* AppDelegate.m */,
 				DDCA01B917C830D0005A93D4 /* JGMethodHooker.h */,
 				DDCA01BA17C830D0005A93D4 /* JGMethodHooker.m */,
-				DDCA01AC17C83091005A93D4 /* Images.xcassets */,
+				DDB4063417CB60DA0004E696 /* AppDelegate.h */,
+				DDB4063517CB60DA0004E696 /* AppDelegate.m */,
 				DDCA01B817C8309E005A93D4 /* Supporting Files */,
 			);
-			path = JGMethodHookTests;
+			path = JGMethodHookerTests;
 			sourceTree = "<group>";
 		};
 		DDCA01B817C8309E005A93D4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DDCA01AA17C83091005A93D4 /* InfoPlist.strings */,
-				DDCA01AD17C83091005A93D4 /* JGMethodHook-Info.plist */,
-				DDCA01AE17C83091005A93D4 /* JGMethodHook-Prefix.pch */,
-				DDCA01B117C83091005A93D4 /* main.m */,
+				DDB4064617CB61030004E696 /* Images.xcassets */,
+				DDB4064117CB60FB0004E696 /* JGMethodHook-Info.plist */,
+				DDB4064217CB60FB0004E696 /* JGMethodHook-Prefix.pch */,
+				DDB4064317CB60FB0004E696 /* main.m */,
 			);
 			name = "Supporting Files";
+			path = ../JGMethodHookTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DDB2DD7717C681C30077C18E /* JGMethodHookTests */ = {
+		DDB2DD7717C681C30077C18E /* JGMethodHookerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHookTests" */;
+			buildConfigurationList = DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHookerTests" */;
 			buildPhases = (
 				DDB2DD7417C681C30077C18E /* Sources */,
 				DDB2DD7517C681C30077C18E /* Frameworks */,
@@ -107,9 +106,9 @@
 			);
 			dependencies = (
 			);
-			name = JGMethodHookTests;
+			name = JGMethodHookerTests;
 			productName = JGMethodHook;
-			productReference = DDB2DD7817C681C30077C18E /* JGMethodHookTests.app */;
+			productReference = DDB2DD7817C681C30077C18E /* JGMethodHookerTests.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -121,7 +120,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Jonas Gessner";
 			};
-			buildConfigurationList = DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHookTests" */;
+			buildConfigurationList = DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHookerTests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -133,7 +132,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DDB2DD7717C681C30077C18E /* JGMethodHookTests */,
+				DDB2DD7717C681C30077C18E /* JGMethodHookerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -153,24 +152,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDCA01B217C83091005A93D4 /* AppDelegate.m in Sources */,
+				DDB4063C17CB60DA0004E696 /* AppDelegate.m in Sources */,
+				DDB4064517CB60FB0004E696 /* main.m in Sources */,
 				DDCA01BB17C830D0005A93D4 /* JGMethodHooker.m in Sources */,
-				DDCA01B717C83091005A93D4 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		DDCA01AA17C83091005A93D4 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DDCA01AB17C83091005A93D4 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		DDB2DDA217C681C40077C18E /* Debug */ = {
@@ -249,16 +237,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JGMethodHookTests/JGMethodHook-Prefix.pch";
+				GCC_PREFIX_HEADER = "JGMethodHookerTests/JGMethodHook-Prefix.pch";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = "JGMethodHookTests/JGMethodHook-Info.plist";
+				INFOPLIST_FILE = "JGMethodHookerTests/JGMethodHook-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/opt/theos/lib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = JGMethodHookerTests;
 				TEST_HOST = "";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
@@ -271,16 +259,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JGMethodHookTests/JGMethodHook-Prefix.pch";
+				GCC_PREFIX_HEADER = "JGMethodHookerTests/JGMethodHook-Prefix.pch";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = "JGMethodHookTests/JGMethodHook-Info.plist";
+				INFOPLIST_FILE = "JGMethodHookerTests/JGMethodHook-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/opt/theos/lib,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = JGMethodHookerTests;
 				TEST_HOST = "";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
@@ -290,7 +278,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHookTests" */ = {
+		DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHookerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DDB2DDA217C681C40077C18E /* Debug */,
@@ -299,7 +287,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHookTests" */ = {
+		DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHookerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DDB2DDA517C681C40077C18E /* Debug */,
