@@ -37,7 +37,7 @@ Swizzling the method `-(int)[TestClass test:(int)]`
 ```objc
 [TestClass swizzleInstanceMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
     //return a replacement block
-    return ^ JGMethodReplacement(int, const Class *, int arg) {
+    return ^ JGMethodReplacement(int, TestClass *, int arg) {
 	//get the original value
         int orig = JGCastOriginal(int, arg);
 	//return the modified value
