@@ -1,20 +1,22 @@
 //
-//  AppDelegate.m
-//  JGMethodSwizzler
+//  JGMethodSwizzlerTests.m
+//  JGMethodSwizzlerTests
 //
-//  Created by Jonas Gessner on 22.08.13.
+//  Created by Jonas Gessner on 27.10.13.
 //  Copyright (c) 2013 Jonas Gessner. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import <XCTest/XCTest.h>
 #import "JGMethodSwizzler.h"
 
-@implementation AppDelegate
+
+@interface JGMethodSwizzlerTests : XCTestCase
+
+@end
+
+@implementation JGMethodSwizzlerTests
 
 
-static BOOL testFailed = NO;
-
-#define JGTestCheck(condition, description) if (!condition) {testFailed = YES; NSLog(@"Test Failed: %@", description);}
 
 - (int)a:(int)b {
     return b-2;
@@ -29,11 +31,17 @@ static BOOL testFailed = NO;
     return CGRectInset(r, 10.0f, 10.0f);
 }
 
+
+
+
+
+
+
 - (NSObject *)applySwizzles {
     int add = arc4random_uniform(50);
     
     [self.class swizzleInstanceMethod:@selector(a:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, AppDelegate *, int b) {
+        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int b) {
             int orig = JGCastOriginal(int, b);
             return orig+add;
         };
@@ -43,9 +51,7 @@ static BOOL testFailed = NO;
     
     int aa = [self a:yoo];
     
-    JGTestCheck(aa == yoo+add, @"Integer calculation mismatch");
-    
-    
+    XCTAssert(aa == yoo-2+add, @"Integer calculation mismatch");
     
     [self.class swizzleClassMethod:@selector(testRect) withReplacement:^ JGMethodReplacementProviderBlock {
         return ^ JGMethodReplacement(CGRect, const Class *) {
@@ -56,7 +62,7 @@ static BOOL testFailed = NO;
     }];
     
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), -5.0f, -5.0f)), @"CGRect swizzling failed");
+    XCTAssert(CGRectEqualToRect([self.class testRect], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), -5.0f, -5.0f)), @"CGRect swizzling failed");
     
     [self.class swizzleClassMethod:@selector(testRect2:) withReplacement:^ JGMethodReplacementProviderBlock {
         return ^ JGMethodReplacement(CGRect, const Class *, CGRect rect) {
@@ -69,7 +75,7 @@ static BOOL testFailed = NO;
     
     CGRect testRect = (CGRect){{(CGFloat)arc4random_uniform(100), (CGFloat)arc4random_uniform(100)}, {(CGFloat)arc4random_uniform(100), (CGFloat)arc4random_uniform(100)}};
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect2:testRect], CGRectInset(CGRectInset(testRect, 10.0f, 10.0f), -5.0f, -5.0f)), @"CGRect swizzling (2) failed");
+    XCTAssert(CGRectEqualToRect([self.class testRect2:testRect], CGRectInset(CGRectInset(testRect, 10.0f, 10.0f), -5.0f, -5.0f)), @"CGRect swizzling (2) failed");
     
     
     NSObject *object = [NSObject new];
@@ -83,7 +89,7 @@ static BOOL testFailed = NO;
         };
     }];
     
-    JGTestCheck([[object description] hasSuffix:@"Only swizzled this instance"] && ![[[NSObject new] description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed");
+    XCTAssert([[object description] hasSuffix:@"Only swizzled this instance"] && ![[[NSObject new] description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed");
     
     [object swizzleMethod:@selector(init) withReplacement:^ JGMethodReplacementProviderBlock {
         return ^ JGMethodReplacement(id, NSObject *) {
@@ -96,14 +102,13 @@ static BOOL testFailed = NO;
     return object;
 }
 
-
 - (void)removeSwizzles1:(NSObject *)object {
     BOOL ok = [object deswizzleMethod:@selector(description)];
     BOOL ok1 = [object deswizzleMethod:@selector(init)];
     BOOL ok2 = [object deswizzle];
     BOOL ok3 = deswizzleInstances();
     
-    JGTestCheck(ok3 == NO && ok == YES && ok1 == YES && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
+    XCTAssert(ok3 == NO && ok == YES && ok1 == YES && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
     
     
     BOOL ok4 = [self.class deswizzleInstanceMethod:@selector(a:)];
@@ -120,12 +125,12 @@ static BOOL testFailed = NO;
     BOOL ok7 = [self.class deswizzleAllClassMethods];
     
     
-    JGTestCheck(ok10 == NO && ok9 == NO && ok8 == NO && ok7 == NO && ok4 == YES && ok5 == YES && ok6 == YES && [self a:10] == 8, @"Deswizzling failed");
+    XCTAssert(ok10 == NO && ok9 == NO && ok8 == NO && ok7 == NO && ok4 == YES && ok5 == YES && ok6 == YES && [self a:10] == 8, @"Deswizzling failed");
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
+    XCTAssert(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
     
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
+    XCTAssert(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
 }
 
 - (void)removeSwizzles2:(NSObject *)object {
@@ -134,7 +139,7 @@ static BOOL testFailed = NO;
     BOOL ok = [object deswizzleMethod:@selector(description)];
     BOOL ok1 = [object deswizzleMethod:@selector(init)];
     
-    JGTestCheck(ok3 == NO && ok == NO && ok1 == NO && ok2 == YES && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
+    XCTAssert(ok3 == NO && ok == NO && ok1 == NO && ok2 == YES && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
     
     
     BOOL ok6 = [self.class deswizzleInstanceMethod:@selector(a:)];
@@ -151,12 +156,12 @@ static BOOL testFailed = NO;
     BOOL ok5 = [self.class deswizzleClassMethod:@selector(testRect2:)];
     
     
-    JGTestCheck(ok10 == NO && ok8 == NO && ok9 == NO && ok6 == YES && ok7 == NO && ok4 == NO && ok5 == NO && [self a:10] == 8, @"Deswizzling failed");
+    XCTAssert(ok10 == NO && ok8 == NO && ok9 == NO && ok6 == YES && ok7 == YES && ok4 == NO && ok5 == NO && [self a:10] == 8, @"Deswizzling failed");
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
+    XCTAssert(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
     
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
+    XCTAssert(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
 }
 
 
@@ -167,7 +172,7 @@ static BOOL testFailed = NO;
     BOOL ok = [object deswizzleMethod:@selector(description)];
     BOOL ok1 = [object deswizzleMethod:@selector(init)];
     
-    JGTestCheck(ok3 == YES && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
+    XCTAssert(ok3 == YES && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
     
     
     BOOL ok6 = [self.class deswizzleAllInstanceMethods];
@@ -183,12 +188,12 @@ static BOOL testFailed = NO;
     BOOL ok5 = [self.class deswizzleClassMethod:@selector(testRect2:)];
     
     
-    JGTestCheck(ok9 == NO && ok10 == NO && ok6 == YES && ok7 == YES && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
+    XCTAssert(ok9 == NO && ok10 == NO && ok6 == YES && ok7 == YES && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
+    XCTAssert(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
     
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
+    XCTAssert(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
 }
 
 
@@ -199,7 +204,7 @@ static BOOL testFailed = NO;
     BOOL ok1 = [object deswizzleMethod:@selector(init)];
     BOOL ok2 = [object deswizzle];
     
-    JGTestCheck(ok3 == YES && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
+    XCTAssert(ok3 == YES && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
     
     
     BOOL ok9 = [self.class deswizzleAllMethods];
@@ -215,12 +220,12 @@ static BOOL testFailed = NO;
     BOOL ok5 = [self.class deswizzleClassMethod:@selector(testRect2:)];
     
     
-    JGTestCheck(ok10 == NO && ok9 == YES && ok6 == NO && ok7 == NO && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
+    XCTAssert(ok10 == NO && ok9 == YES && ok6 == NO && ok7 == NO && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
+    XCTAssert(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
     
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
+    XCTAssert(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
 }
 
 
@@ -231,7 +236,7 @@ static BOOL testFailed = NO;
     BOOL ok1 = [object deswizzleMethod:@selector(init)];
     BOOL ok2 = [object deswizzle];
     
-    JGTestCheck(ok3 == YES && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
+    XCTAssert(ok3 == YES && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
     
     
     BOOL ok10 = deswizzleGlobal();
@@ -247,12 +252,12 @@ static BOOL testFailed = NO;
     BOOL ok5 = [self.class deswizzleClassMethod:@selector(testRect2:)];
     
     
-    JGTestCheck(ok10 == YES && ok9 == NO && ok6 == NO && ok7 == NO && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
+    XCTAssert(ok10 == YES && ok9 == NO && ok6 == NO && ok7 == NO && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
+    XCTAssert(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
     
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
+    XCTAssert(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
 }
 
 
@@ -266,7 +271,7 @@ static BOOL testFailed = NO;
     BOOL ok1 = [object deswizzleMethod:@selector(init)];
     BOOL ok2 = [object deswizzle];
     
-    JGTestCheck(ok11 == YES && ok3 == NO && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
+    XCTAssert(ok11 == YES && ok3 == NO && ok == NO && ok1 == NO && ok2 == NO && ![[object description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed (1)");
     
     
     BOOL ok10 = deswizzleGlobal();
@@ -282,16 +287,16 @@ static BOOL testFailed = NO;
     BOOL ok5 = [self.class deswizzleClassMethod:@selector(testRect2:)];
     
     
-    JGTestCheck(ok10 == NO && ok9 == NO && ok6 == NO && ok7 == NO && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
+    XCTAssert(ok10 == NO && ok9 == NO && ok6 == NO && ok7 == NO && ok4 == NO && ok5 == NO && ok8 == NO && [self a:10] == 8, @"Deswizzling failed");
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
+    XCTAssert(CGRectEqualToRect([self.class testRect], CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)), @"Deswizzling failed (1)");
     
     
-    JGTestCheck(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
+    XCTAssert(CGRectEqualToRect([self.class testRect2:CGRectMake(0.0f, 1.0f, 2.0f, 3.0f)], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), 10.0f, 10.0f)), @"Deswizzling failed (2)");
 }
 
 
-- (void)test {
+- (void)testMain {
     NSObject *object = [self applySwizzles];
     
     [self removeSwizzles1:object];
@@ -325,24 +330,9 @@ static BOOL testFailed = NO;
     [self removeSwizzles6:object];
     
     
-//    For debugging purposes: (function needs to be uncommented in JGMethodSwizzler.m in order to work)
-//    FOUNDATION_EXTERN NSString *getStatus();
-//    NSLog(@"STATUS %@", getStatus());
-}
-
-
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    CFTimeInterval start = CFAbsoluteTimeGetCurrent();
-    
-    //We've got some pretty extensive tests gong on here:
-    [self test];
-    
-    if (!testFailed) {
-        NSLog(@"Tests Succeeded. Elapsed Time: %f", CFAbsoluteTimeGetCurrent()-start);
-    }
-    
-    return YES;
+    //    For debugging purposes: (function needs to be uncommented in JGMethodSwizzler.m in order to work)
+    //    FOUNDATION_EXTERN NSString *getStatus();
+    //    NSLog(@"STATUS %@", getStatus());
 }
 
 @end

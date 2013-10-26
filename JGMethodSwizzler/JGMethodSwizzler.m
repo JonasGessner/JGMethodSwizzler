@@ -610,7 +610,7 @@ NS_INLINE void swizzleInstance(__unsafe_unretained id object, SEL selector, JGMe
 
 
 
-BOOL deswizzleGlobal() {
+FOUNDATION_EXTERN BOOL deswizzleGlobal() {
     BOOL success = NO;
     OSSpinLockLock(&lock);
     for (NSString *classKey in originalClassMethods.copy) {
@@ -636,7 +636,7 @@ BOOL deswizzleGlobal() {
 }
 
 
-BOOL deswizzleInstances() {
+FOUNDATION_EXTERN BOOL deswizzleInstances() {
     OSSpinLockLock(&lock);
     BOOL success = NO;
     for (NSValue *pointer in instanceSwizzleCount.copy) {
@@ -653,7 +653,7 @@ BOOL deswizzleInstances() {
     return success;
 }
 
-BOOL deswizzleAll() {
+FOUNDATION_EXTERN BOOL deswizzleAll() {
     BOOL a = deswizzleGlobal();
     BOOL b = deswizzleInstances();
     
