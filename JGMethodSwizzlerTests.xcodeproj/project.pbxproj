@@ -7,25 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD0E9BD7181BF418009B37E2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD0E9BD3181BF418009B37E2 /* Images.xcassets */; };
+		DD0E9BD9181BF418009B37E2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0E9BD6181BF418009B37E2 /* main.m */; };
+		DD0E9BDC181BF424009B37E2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0E9BDB181BF424009B37E2 /* AppDelegate.m */; };
+		DD0E9BDF181BF42C009B37E2 /* JGMethodSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0E9BDE181BF42C009B37E2 /* JGMethodSwizzler.m */; };
 		DDB2DD7C17C681C30077C18E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB2DD7B17C681C30077C18E /* Foundation.framework */; };
 		DDB2DDB117C685610077C18E /* libsubstrate.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */; };
-		DDB4063C17CB60DA0004E696 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB4063517CB60DA0004E696 /* AppDelegate.m */; };
-		DDB4064517CB60FB0004E696 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DDB4064317CB60FB0004E696 /* main.m */; };
-		DDCA01BB17C830D0005A93D4 /* JGMethodHooker.m in Sources */ = {isa = PBXBuildFile; fileRef = DDCA01BA17C830D0005A93D4 /* JGMethodHooker.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		DDB2DD7817C681C30077C18E /* JGMethodHookerTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JGMethodHookerTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DD0E9BD3181BF418009B37E2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = JGMethodSwizzlerTests/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		DD0E9BD4181BF418009B37E2 /* JGMethodSwizzler-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "JGMethodSwizzler-Info.plist"; path = "JGMethodSwizzlerTests/JGMethodSwizzler-Info.plist"; sourceTree = SOURCE_ROOT; };
+		DD0E9BD5181BF418009B37E2 /* JGMethodSwizzler-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JGMethodSwizzler-Prefix.pch"; path = "JGMethodSwizzlerTests/JGMethodSwizzler-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		DD0E9BD6181BF418009B37E2 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = JGMethodSwizzlerTests/main.m; sourceTree = SOURCE_ROOT; };
+		DD0E9BDA181BF424009B37E2 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = JGMethodSwizzlerTests/AppDelegate.h; sourceTree = SOURCE_ROOT; };
+		DD0E9BDB181BF424009B37E2 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = JGMethodSwizzlerTests/AppDelegate.m; sourceTree = SOURCE_ROOT; };
+		DD0E9BDD181BF42C009B37E2 /* JGMethodSwizzler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JGMethodSwizzler.h; path = JGMethodSwizzler/JGMethodSwizzler.h; sourceTree = SOURCE_ROOT; };
+		DD0E9BDE181BF42C009B37E2 /* JGMethodSwizzler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JGMethodSwizzler.m; path = JGMethodSwizzler/JGMethodSwizzler.m; sourceTree = SOURCE_ROOT; };
+		DDB2DD7817C681C30077C18E /* JGMethodSwizzlerTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JGMethodSwizzlerTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DDB2DD7B17C681C30077C18E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsubstrate.dylib; path = ../../../../../opt/theos/lib/libsubstrate.dylib; sourceTree = "<group>"; };
-		DDB4063417CB60DA0004E696 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		DDB4063517CB60DA0004E696 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DDB4064117CB60FB0004E696 /* JGMethodHook-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "JGMethodHook-Info.plist"; path = "JGMethodHookerTests/JGMethodHook-Info.plist"; sourceTree = SOURCE_ROOT; };
-		DDB4064217CB60FB0004E696 /* JGMethodHook-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "JGMethodHook-Prefix.pch"; path = "JGMethodHookerTests/JGMethodHook-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		DDB4064317CB60FB0004E696 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = JGMethodHookerTests/main.m; sourceTree = SOURCE_ROOT; };
-		DDB4064617CB61030004E696 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = JGMethodHookerTests/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		DDCA01B917C830D0005A93D4 /* JGMethodHooker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JGMethodHooker.h; path = JGMethodHooker/JGMethodHooker.h; sourceTree = SOURCE_ROOT; };
-		DDCA01BA17C830D0005A93D4 /* JGMethodHooker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JGMethodHooker.m; path = JGMethodHooker/JGMethodHooker.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,7 +45,7 @@
 		DDB2DD6F17C681C30077C18E = {
 			isa = PBXGroup;
 			children = (
-				DDB4063317CB60DA0004E696 /* JGMethodHookerTests */,
+				DDB4063317CB60DA0004E696 /* JGMethodSwizzlerTests */,
 				DDB2DD7A17C681C30077C18E /* Frameworks */,
 				DDB2DD7917C681C30077C18E /* Products */,
 			);
@@ -53,7 +54,7 @@
 		DDB2DD7917C681C30077C18E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				DDB2DD7817C681C30077C18E /* JGMethodHookerTests.app */,
+				DDB2DD7817C681C30077C18E /* JGMethodSwizzlerTests.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,25 +68,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DDB4063317CB60DA0004E696 /* JGMethodHookerTests */ = {
+		DDB4063317CB60DA0004E696 /* JGMethodSwizzlerTests */ = {
 			isa = PBXGroup;
 			children = (
-				DDCA01B917C830D0005A93D4 /* JGMethodHooker.h */,
-				DDCA01BA17C830D0005A93D4 /* JGMethodHooker.m */,
-				DDB4063417CB60DA0004E696 /* AppDelegate.h */,
-				DDB4063517CB60DA0004E696 /* AppDelegate.m */,
+				DD0E9BDD181BF42C009B37E2 /* JGMethodSwizzler.h */,
+				DD0E9BDE181BF42C009B37E2 /* JGMethodSwizzler.m */,
+				DD0E9BDA181BF424009B37E2 /* AppDelegate.h */,
+				DD0E9BDB181BF424009B37E2 /* AppDelegate.m */,
 				DDCA01B817C8309E005A93D4 /* Supporting Files */,
 			);
+			name = JGMethodSwizzlerTests;
 			path = JGMethodHookerTests;
 			sourceTree = "<group>";
 		};
 		DDCA01B817C8309E005A93D4 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				DDB4064617CB61030004E696 /* Images.xcassets */,
-				DDB4064117CB60FB0004E696 /* JGMethodHook-Info.plist */,
-				DDB4064217CB60FB0004E696 /* JGMethodHook-Prefix.pch */,
-				DDB4064317CB60FB0004E696 /* main.m */,
+				DD0E9BD3181BF418009B37E2 /* Images.xcassets */,
+				DD0E9BD4181BF418009B37E2 /* JGMethodSwizzler-Info.plist */,
+				DD0E9BD5181BF418009B37E2 /* JGMethodSwizzler-Prefix.pch */,
+				DD0E9BD6181BF418009B37E2 /* main.m */,
 			);
 			name = "Supporting Files";
 			path = ../JGMethodHookTests;
@@ -94,9 +96,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		DDB2DD7717C681C30077C18E /* JGMethodHookerTests */ = {
+		DDB2DD7717C681C30077C18E /* JGMethodSwizzlerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHookerTests" */;
+			buildConfigurationList = DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodSwizzlerTests" */;
 			buildPhases = (
 				DDB2DD7417C681C30077C18E /* Sources */,
 				DDB2DD7517C681C30077C18E /* Frameworks */,
@@ -106,9 +108,9 @@
 			);
 			dependencies = (
 			);
-			name = JGMethodHookerTests;
+			name = JGMethodSwizzlerTests;
 			productName = JGMethodHook;
-			productReference = DDB2DD7817C681C30077C18E /* JGMethodHookerTests.app */;
+			productReference = DDB2DD7817C681C30077C18E /* JGMethodSwizzlerTests.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -120,7 +122,7 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Jonas Gessner";
 			};
-			buildConfigurationList = DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHookerTests" */;
+			buildConfigurationList = DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodSwizzlerTests" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -132,7 +134,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				DDB2DD7717C681C30077C18E /* JGMethodHookerTests */,
+				DDB2DD7717C681C30077C18E /* JGMethodSwizzlerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -142,6 +144,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD0E9BD7181BF418009B37E2 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -152,9 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDB4063C17CB60DA0004E696 /* AppDelegate.m in Sources */,
-				DDB4064517CB60FB0004E696 /* main.m in Sources */,
-				DDCA01BB17C830D0005A93D4 /* JGMethodHooker.m in Sources */,
+				DD0E9BDF181BF42C009B37E2 /* JGMethodSwizzler.m in Sources */,
+				DD0E9BDC181BF424009B37E2 /* AppDelegate.m in Sources */,
+				DD0E9BD9181BF418009B37E2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,16 +240,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JGMethodHookerTests/JGMethodHook-Prefix.pch";
+				GCC_PREFIX_HEADER = "JGMethodSwizzlerTests/JGMethodSwizzler-Prefix.pch";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = "JGMethodHookerTests/JGMethodHook-Info.plist";
+				INFOPLIST_FILE = "JGMethodSwizzlerTests/JGMethodSwizzler-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/opt/theos/lib,
 				);
-				PRODUCT_NAME = JGMethodHookerTests;
+				PRODUCT_NAME = JGMethodSwizzlerTests;
 				TEST_HOST = "";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
@@ -259,16 +262,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "JGMethodHookerTests/JGMethodHook-Prefix.pch";
+				GCC_PREFIX_HEADER = "JGMethodSwizzlerTests/JGMethodSwizzler-Prefix.pch";
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_INCOMPATIBLE_POINTER_TYPE_WARNINGS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
-				INFOPLIST_FILE = "JGMethodHookerTests/JGMethodHook-Info.plist";
+				INFOPLIST_FILE = "JGMethodSwizzlerTests/JGMethodSwizzler-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/opt/theos/lib,
 				);
-				PRODUCT_NAME = JGMethodHookerTests;
+				PRODUCT_NAME = JGMethodSwizzlerTests;
 				TEST_HOST = "";
 				WARNING_CFLAGS = "-Wall";
 				WRAPPER_EXTENSION = app;
@@ -278,7 +281,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodHookerTests" */ = {
+		DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodSwizzlerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DDB2DDA217C681C40077C18E /* Debug */,
@@ -287,7 +290,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodHookerTests" */ = {
+		DDB2DDA417C681C40077C18E /* Build configuration list for PBXNativeTarget "JGMethodSwizzlerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				DDB2DDA517C681C40077C18E /* Debug */,
