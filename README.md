@@ -18,13 +18,13 @@ JGMethodSwizzler is completely thread safe and can handle multiple swizzles. Ins
 Swizzling the method `+(int)[TestClass test:(int)]`
 ```objc
 [TestClass swizzleClassMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-    //return a replacement block
-    return ^ JGMethodReplacement(int, const Class *, int arg) {
-	//get the original value
-        int orig = JGCastOriginal(int, arg);
-	//return the modified value
-        return orig+2;
-    };
+	//return a replacement block
+	return ^ JGMethodReplacement(int, const Class *, int arg) {
+		//get the original value
+		int orig = JGCastOriginal(int, arg);
+		//return the modified value
+		return orig+2;
+	};
 }];
 
 ```
@@ -36,13 +36,13 @@ After this code is run, calling the method will return the modified value until 
 Swizzling the method `-(int)[TestClass test:(int)]`
 ```objc
 [TestClass swizzleInstanceMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-    //return a replacement block
-    return ^ JGMethodReplacement(int, TestClass *, int arg) {
-	//get the original value
-        int orig = JGCastOriginal(int, arg);
-	//return the modified value
-        return orig+2;
-    };
+	//return a replacement block
+	return ^ JGMethodReplacement(int, TestClass *, int arg) {
+		//get the original value
+		int orig = JGCastOriginal(int, arg);
+		//return the modified value
+		return orig+2;
+	};
 }];
 
 ```
@@ -57,11 +57,11 @@ Swizzling the `description` method on a specific `NSObject`instance:
 NSObject *object = [NSObject new];
 
 [object swizzleMethod:@selector(description) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(NSString *, NSObject *) {
-            NSString *orig = JGCastOriginal(NSString *);
+	return ^ JGMethodReplacement(NSString *, NSObject *) {
+		NSString *orig = JGCastOriginal(NSString *);
             
-            return [orig stringByAppendingString:@" Swizzled!!"];
-        };
+		return [orig stringByAppendingString:@" Swizzled!!"];
+	};
     }];
 ```
 
