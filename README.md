@@ -102,7 +102,7 @@ All swizzles can be removed once they've been applied.
 
 
 ##Notes
-JGMethodSwizzler works with both ARC (automatic reference counting) and MRC (manual reference counting).
+JGMethodSwizzler works with both ARC (automatic reference counting) and MRC (manual reference counting). (MRC support is broken at the moment)
 
 ##License
 Licensed under the MIT license.

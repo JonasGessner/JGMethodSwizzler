@@ -325,16 +325,9 @@ NS_INLINE void swizzleClassMethod(__unsafe_unretained Class class, SEL selector,
     
     NSCAssert(blockIsCompatibleWithMethodType(replaceBlock, class, selector, NO), @"Invalid method replacement");
     
-    
-    IMP replace = imp_implementationWithBlock(replaceBlock);
-    
-    
-    orig = nil;
-    
-    
     Class meta = object_getClass(class);
     
-    classSwizzleMethod(meta, originalMethod, replace);
+    classSwizzleMethod(meta, originalMethod, imp_implementationWithBlock(replaceBlock));
     
     OSSpinLockUnlock(&lock);
 }
@@ -354,13 +347,9 @@ NS_INLINE void swizzleInstanceMethod(__unsafe_unretained Class class, SEL select
     
     id replaceBlock = replacement(orig, class, selector);
     
-    
     NSCAssert(blockIsCompatibleWithMethodType(replaceBlock, class, selector, YES), @"Invalid method replacement");
     
-    
     IMP replace = imp_implementationWithBlock(replaceBlock);
-    
-    orig = nil;
     
     classSwizzleMethod(class, originalMethod, replace);
     
