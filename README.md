@@ -26,7 +26,6 @@ Swizzling the method `+(int)[TestClass test:(int)]`
 		return orig+2;
 	};
 }];
-
 ```
 
 After this code is run, calling the method will return the modified value until the method is deswizzled.
@@ -44,7 +43,6 @@ Swizzling the method `-(int)[TestClass test:(int)]`
 		return orig+2;
 	};
 }];
-
 ```
 
 After this code is run, calling the method will return the modified value until the method is deswizzled.
@@ -62,7 +60,7 @@ NSObject *object = [NSObject new];
             
 		return [orig stringByAppendingString:@" Swizzled!!"];
 	};
-    }];
+}];
 ```
 
 After this code is run, calling the method will return the modified value until the method is deswizzled.
