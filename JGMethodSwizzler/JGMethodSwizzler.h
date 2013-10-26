@@ -21,6 +21,34 @@ typedef id (^JGMethodReplacementProvider)(JG_IMP original, __unsafe_unretained C
 
 
 
+/**
+ Deswizzle all methods that have been swizzled accross all instances.
+ 
+ @return \c YES if any methods have been deswizzled successfully.
+ */
+
+FOUNDATION_EXTERN BOOL deswizzleGlobal();
+
+
+/**
+ Deswizzle all methods that have been swizzled for specific instances.
+ 
+ @return \c YES if any methods have been deswizzled successfully.
+ */
+
+FOUNDATION_EXTERN BOOL deswizzleInstances();
+
+
+/**
+ Deswizzle all methods.
+ 
+ @return \c YES if any methods have been deswizzled successfully.
+ */
+
+FOUNDATION_EXTERN BOOL deswizzleAll();
+
+
+
 
 //-----------------
 /* Helper macros */
@@ -32,9 +60,9 @@ typedef id (^JGMethodReplacementProvider)(JG_IMP original, __unsafe_unretained C
 
 
 
-//--------------------------------------------------------
-/** @name Category for extremely easy method swizzling */
-//--------------------------------------------------------
+//---------------------------------------
+/** @name Super easy method swizzling */
+//---------------------------------------
 
 
 @interface NSObject (JGMethodSwizzler)
@@ -61,8 +89,91 @@ typedef id (^JGMethodReplacementProvider)(JG_IMP original, __unsafe_unretained C
 
 + (void)swizzleInstanceMethod:(SEL)selector withReplacement:(JGMethodReplacementProvider)replacementProvider;
 
+@end
 
 
+
+
+//---------------------------------------
+/** @name Super easy method swizzling */
+//---------------------------------------
+
+@interface NSObject (JGMethodDeSwizzler)
+
+/**
+ Restore the specified class method by removing all swizzles.
+ 
+ @param selector Selector of the swizzled method.
+ 
+ @return \c YES if the method was successfully restored, \c NO if the method has never been swizzled.
+ 
+ */
+
++ (BOOL)deswizzleClassMethod:(SEL)selector;
+
+
+
+
+/**
+ Restore the specified class method by removing all swizzles.
+ 
+ @param selector Selector of the swizzled method.
+ 
+ @return \c YES if the method was successfully restored, \c NO if the method has never been swizzled.
+ 
+ */
+
++ (BOOL)deswizzleInstanceMethod:(SEL)selector;
+
+
+
+
+
+/**
+ Restore all swizzled class methods.
+ 
+ @return \c YES if the method was successfully restored, \c NO if no method has never been swizzled
+ 
+ */
+
++ (BOOL)deswizzleAllClassMethods;
+
+
+
+/**
+ Restore all swizzled instance methods.
+ 
+ @return \c YES if the method was successfully restored, \c NO if no method has never been swizzled.
+ 
+ */
+
++ (BOOL)deswizzleAllInstanceMethods;
+
+
+
+
+/**
+ Restore all swizzled class and instance methods.
+ 
+ @return \c YES if the method was successfully restored, \c NO if no method has never been swizzled.
+ 
+ */
+
++ (BOOL)deswizzleAllMethods;
+
+@end
+
+
+
+
+
+
+//-------------------------------------------------------------
+/** @name Super easy method swizzling on specific instances */
+//-------------------------------------------------------------
+
+
+@interface NSObject (JGInstanceSwizzler)
 
 /**
  Swizzle the specified instance method on this specific instance only.
@@ -81,7 +192,7 @@ typedef id (^JGMethodReplacementProvider)(JG_IMP original, __unsafe_unretained C
  
  @param selector Selector of the swizzled method.
  
- @return \c YES if the method was successfully restored, \c NO if the method has never been swizzled
+ @return \c YES if the method was successfully restored, \c NO if the method has never been swizzled.
  
  */
 
@@ -92,7 +203,7 @@ typedef id (^JGMethodReplacementProvider)(JG_IMP original, __unsafe_unretained C
 /**
  Restore all swizzled methods.
  
- @return \c YES if the method was successfully restored, \c NO if no method has never been swizzled
+ @return \c YES if the method was successfully restored, \c NO if no method has never been swizzled.
  
  */
 
