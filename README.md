@@ -1,5 +1,7 @@
-JGMethodSwizzler
-==============
+<h1>JGMethodSwizzler</h1><h6>© 2013 Jonas Gessner</h6>
+
+----------------
+<br>
 
 An easy to use Objective-C level API for swizzling class and instance methods, as well as swizzling instance methods on specific instances only.
 
@@ -100,7 +102,12 @@ All swizzles can be removed once they've been applied.
 
 
 ##Notes
-JGMethodSwizzler works with both ARC (automatic reference counting) and MRC (manual reference counting). (MRC support is broken at the moment)
+JGMethodSwizzler works with both ARC (automatic reference counting) and MRC (manual reference counting).
+#####(MRC support is broken at the moment)
 
 ##License
 Licensed under the MIT license.
+
+##Credits
+JGMethodSwizzler has been created by Jonas Gessner.
+
