@@ -111,3 +111,4 @@ Licensed under the MIT license.
 ##Credits
 JGMethodSwizzler has been created by Jonas Gessner.
 
+Thanks to Andrew Richardson for his inspiration and contribution with `InstanceHook`.
