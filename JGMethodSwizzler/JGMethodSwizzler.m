@@ -144,7 +144,13 @@ NS_INLINE BOOL blockIsCompatibleWithMethodType(id block, __unsafe_unretained Cla
 
 NS_INLINE BOOL blockIsValidReplacementProvider(id block) {
     const char *blockType = blockGetType(block);
-    const char *expectedType = "@16@?0^?4#8:12";
+    
+    JGMethodReplacementProvider dummy = ^ JGMethodReplacementProviderBlock {
+        return nil;
+    };
+    
+    const char *expectedType = blockGetType(dummy);
+    
     return (strcmp(expectedType, blockType) == 0);
 }
 

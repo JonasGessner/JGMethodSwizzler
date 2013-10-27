@@ -14,7 +14,21 @@
 		DD0E9BF3181C7E56009B37E2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0E9BF2181C7E56009B37E2 /* UIKit.framework */; };
 		DD0E9BF9181C7E56009B37E2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DD0E9BF7181C7E56009B37E2 /* InfoPlist.strings */; };
 		DD0E9BFB181C7E56009B37E2 /* JGMethodSwizzlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0E9BFA181C7E56009B37E2 /* JGMethodSwizzlerTests.m */; };
+		DDC3227A181D62E800848CAC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0E9BEF181C7E56009B37E2 /* XCTest.framework */; };
+		DDC32280181D62E800848CAC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DDC3227E181D62E800848CAC /* InfoPlist.strings */; };
+		DDC3228A181D631700848CAC /* JGMethodSwizzlerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DD0E9BFA181C7E56009B37E2 /* JGMethodSwizzlerTests.m */; };
+		DDC3228B181D631800848CAC /* JGMethodSwizzler.m in Sources */ = {isa = PBXBuildFile; fileRef = DD02B601181C8004005C543D /* JGMethodSwizzler.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DDC32284181D62E800848CAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DDB2DD7017C681C30077C18E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD0E9BED181C7E56009B37E2;
+			remoteInfo = JGMethodSwizzlerTests;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		DD02B5FE181C7FC1005C543D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -25,10 +39,14 @@
 		DD0E9BF2181C7E56009B37E2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		DD0E9BF6181C7E56009B37E2 /* JGMethodSwizzlerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JGMethodSwizzlerTests-Info.plist"; sourceTree = "<group>"; };
 		DD0E9BF8181C7E56009B37E2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DD0E9BFA181C7E56009B37E2 /* JGMethodSwizzlerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JGMethodSwizzlerTests.m; sourceTree = "<group>"; };
+		DD0E9BFA181C7E56009B37E2 /* JGMethodSwizzlerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = JGMethodSwizzlerTests.m; path = JGMethodSwizzlerTests/JGMethodSwizzlerTests.m; sourceTree = "<group>"; };
 		DD0E9BFC181C7E56009B37E2 /* JGMethodSwizzlerTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JGMethodSwizzlerTests-Prefix.pch"; sourceTree = "<group>"; };
 		DDB2DD7B17C681C30077C18E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DDB2DDAE17C6824D0077C18E /* libsubstrate.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsubstrate.dylib; path = ../../../../../opt/theos/lib/libsubstrate.dylib; sourceTree = "<group>"; };
+		DDC32279181D62E800848CAC /* JGMethodSwizzlerTests-OSX.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "JGMethodSwizzlerTests-OSX.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DDC3227D181D62E800848CAC /* JGMethodSwizzlerTests-OSX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JGMethodSwizzlerTests-OSX-Info.plist"; sourceTree = "<group>"; };
+		DDC3227F181D62E800848CAC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		DDC32283181D62E800848CAC /* JGMethodSwizzlerTests-OSX-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JGMethodSwizzlerTests-OSX-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,15 +61,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DDC32276181D62E800848CAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDC3227A181D62E800848CAC /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		DD0E9BF4181C7E56009B37E2 /* JGMethodSwizzlerTests */ = {
 			isa = PBXGroup;
 			children = (
-				DD02B600181C8004005C543D /* JGMethodSwizzler.h */,
-				DD02B601181C8004005C543D /* JGMethodSwizzler.m */,
-				DD0E9BFA181C7E56009B37E2 /* JGMethodSwizzlerTests.m */,
 				DD0E9BF5181C7E56009B37E2 /* Supporting Files */,
 			);
 			path = JGMethodSwizzlerTests;
@@ -70,7 +93,10 @@
 		DDB2DD6F17C681C30077C18E = {
 			isa = PBXGroup;
 			children = (
+				DDC32289181D62F300848CAC /* JGMethodSwizzler */,
+				DDC3228C181D633F00848CAC /* Tests */,
 				DD0E9BF4181C7E56009B37E2 /* JGMethodSwizzlerTests */,
+				DDC3227B181D62E800848CAC /* JGMethodSwizzlerTests-OSX */,
 				DDB2DD7A17C681C30077C18E /* Frameworks */,
 				DDB2DD7917C681C30077C18E /* Products */,
 			);
@@ -80,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				DD0E9BEE181C7E56009B37E2 /* JGMethodSwizzlerTests.xctest */,
+				DDC32279181D62E800848CAC /* JGMethodSwizzlerTests-OSX.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +121,41 @@
 				DD0E9BF2181C7E56009B37E2 /* UIKit.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DDC3227B181D62E800848CAC /* JGMethodSwizzlerTests-OSX */ = {
+			isa = PBXGroup;
+			children = (
+				DDC3227C181D62E800848CAC /* Supporting Files */,
+			);
+			path = "JGMethodSwizzlerTests-OSX";
+			sourceTree = "<group>";
+		};
+		DDC3227C181D62E800848CAC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				DDC3227D181D62E800848CAC /* JGMethodSwizzlerTests-OSX-Info.plist */,
+				DDC3227E181D62E800848CAC /* InfoPlist.strings */,
+				DDC32283181D62E800848CAC /* JGMethodSwizzlerTests-OSX-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DDC32289181D62F300848CAC /* JGMethodSwizzler */ = {
+			isa = PBXGroup;
+			children = (
+				DD02B600181C8004005C543D /* JGMethodSwizzler.h */,
+				DD02B601181C8004005C543D /* JGMethodSwizzler.m */,
+			);
+			name = JGMethodSwizzler;
+			sourceTree = "<group>";
+		};
+		DDC3228C181D633F00848CAC /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				DD0E9BFA181C7E56009B37E2 /* JGMethodSwizzlerTests.m */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -116,6 +178,24 @@
 			productReference = DD0E9BEE181C7E56009B37E2 /* JGMethodSwizzlerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DDC32278181D62E800848CAC /* JGMethodSwizzlerTests-OSX */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DDC32286181D62E800848CAC /* Build configuration list for PBXNativeTarget "JGMethodSwizzlerTests-OSX" */;
+			buildPhases = (
+				DDC32275181D62E800848CAC /* Sources */,
+				DDC32276181D62E800848CAC /* Frameworks */,
+				DDC32277181D62E800848CAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DDC32285181D62E800848CAC /* PBXTargetDependency */,
+			);
+			name = "JGMethodSwizzlerTests-OSX";
+			productName = "JGMethodSwizzlerTests-OSX";
+			productReference = DDC32279181D62E800848CAC /* JGMethodSwizzlerTests-OSX.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -124,6 +204,11 @@
 			attributes = {
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Jonas Gessner";
+				TargetAttributes = {
+					DDC32278181D62E800848CAC = {
+						TestTargetID = DD0E9BED181C7E56009B37E2;
+					};
+				};
 			};
 			buildConfigurationList = DDB2DD7317C681C30077C18E /* Build configuration list for PBXProject "JGMethodSwizzlerTests" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -138,6 +223,7 @@
 			projectRoot = "";
 			targets = (
 				DD0E9BED181C7E56009B37E2 /* JGMethodSwizzlerTests */,
+				DDC32278181D62E800848CAC /* JGMethodSwizzlerTests-OSX */,
 			);
 		};
 /* End PBXProject section */
@@ -148,6 +234,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				DD0E9BF9181C7E56009B37E2 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DDC32277181D62E800848CAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDC32280181D62E800848CAC /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,13 +257,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DDC32275181D62E800848CAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DDC3228A181D631700848CAC /* JGMethodSwizzlerTests.m in Sources */,
+				DDC3228B181D631800848CAC /* JGMethodSwizzler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DDC32285181D62E800848CAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD0E9BED181C7E56009B37E2 /* JGMethodSwizzlerTests */;
+			targetProxy = DDC32284181D62E800848CAC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		DD0E9BF7181C7E56009B37E2 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				DD0E9BF8181C7E56009B37E2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DDC3227E181D62E800848CAC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DDC3227F181D62E800848CAC /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -289,6 +408,49 @@
 			};
 			name = Release;
 		};
+		DDC32287181D62E800848CAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JGMethodSwizzlerTests-OSX/JGMethodSwizzlerTests-OSX-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "JGMethodSwizzlerTests-OSX/JGMethodSwizzlerTests-OSX-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		DDC32288181D62E800848CAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "JGMethodSwizzlerTests-OSX/JGMethodSwizzlerTests-OSX-Prefix.pch";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "JGMethodSwizzlerTests-OSX/JGMethodSwizzlerTests-OSX-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -309,6 +471,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		DDC32286181D62E800848CAC /* Build configuration list for PBXNativeTarget "JGMethodSwizzlerTests-OSX" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DDC32287181D62E800848CAC /* Debug */,
+				DDC32288181D62E800848CAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
