@@ -12,6 +12,8 @@
 #import <libkern/OSAtomic.h>
 
 
+#pragma mark Defines
+
 #ifdef __clang__
 #if __has_feature(objc_arc)
 #define JG_ARC_ENABLED
@@ -58,7 +60,9 @@ enum {
 };
 typedef int BlockFlags;
 
-#pragma mark - Helpers
+
+
+#pragma mark - Block Analysis
 
 NS_INLINE const char *blockGetType(id block) {
     struct Block_literal_1 *blockRef = JGBridgeCast(struct Block_literal_1 *, block);
@@ -80,8 +84,6 @@ NS_INLINE const char *blockGetType(id block) {
     
     return NULL;
 }
-
-
 
 NS_INLINE BOOL blockIsCompatibleWithMethodType(id block, __unsafe_unretained Class class, SEL selector, BOOL instanceMethod) {
     const char *blockType = blockGetType(block);
@@ -141,7 +143,6 @@ NS_INLINE BOOL blockIsCompatibleWithMethodType(id block, __unsafe_unretained Cla
     return YES;
 }
 
-
 NS_INLINE BOOL blockIsValidReplacementProvider(id block) {
     const char *blockType = blockGetType(block);
     
@@ -169,14 +170,14 @@ NS_INLINE void classSwizzleMethod(Class cls, Method method, IMP newImp) {
 
 #pragma mark - Original Implementations
 
-
-
 static OSSpinLock lock = OS_SPINLOCK_INIT;
 
 static NSMutableDictionary *originalClassMethods;
+static NSMutableDictionary *originalInstanceMethods;
+static NSMutableDictionary *originalInstanceInstanceMethods;
 
-static JG_IMP originalClassMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
-    NSCAssert(!OSSpinLockTry(&lock), @"Spin Lock is not locked");
+NS_INLINE JG_IMP originalClassMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
+    NSCAssert(!OSSpinLockTry(&lock), @"Spin lock is not locked");
     
     if (!originalClassMethods) {
         originalClassMethods = [[NSMutableDictionary alloc] init];
@@ -228,10 +229,10 @@ static JG_IMP originalClassMethodImplementation(__unsafe_unretained Class class,
 }
 
 
-static NSMutableDictionary *originalInstanceMethods;
 
-static JG_IMP originalInstanceMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
-    NSCAssert(!OSSpinLockTry(&lock), @"Spin Lock is not locked");
+
+NS_INLINE JG_IMP originalInstanceMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
+    NSCAssert(!OSSpinLockTry(&lock), @"Spin lock is not locked");
     
     if (!originalInstanceMethods) {
         originalInstanceMethods = [[NSMutableDictionary alloc] init];
@@ -282,10 +283,10 @@ static JG_IMP originalInstanceMethodImplementation(__unsafe_unretained Class cla
 
 
 
-static NSMutableDictionary *originalInstanceInstanceMethods;
 
-static JG_IMP originalInstanceInstanceMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
-    NSCAssert(!OSSpinLockTry(&lock), @"Spin Lock is not locked");
+
+NS_INLINE JG_IMP originalInstanceInstanceMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
+    NSCAssert(!OSSpinLockTry(&lock), @"Spin lock is not locked");
     
     if (!originalInstanceInstanceMethods) {
         originalInstanceInstanceMethods = [[NSMutableDictionary alloc] init];
@@ -349,6 +350,8 @@ static JG_IMP originalInstanceInstanceMethodImplementation(__unsafe_unretained C
     return orig;
 }
 
+
+#pragma mark - Deswizzling Global Swizzles
 
 
 NS_INLINE BOOL deswizzleClassMethod(__unsafe_unretained Class class, SEL selector) {
@@ -419,7 +422,7 @@ NS_INLINE BOOL deswizzleAllInstanceMethods(__unsafe_unretained Class class) {
 }
 
 
-#pragma mark - Core Swizzling
+#pragma mark - Global Swizzling
 
 NS_INLINE void swizzleClassMethod(__unsafe_unretained Class class, SEL selector, JGMethodReplacementProvider replacement) {
     NSCAssert(blockIsValidReplacementProvider(replacement), @"Invalid method replacemt provider");
@@ -471,11 +474,9 @@ NS_INLINE void swizzleInstanceMethod(__unsafe_unretained Class class, SEL select
 
 
 
-
-#pragma mark - Instance Swizzling
+#pragma mark - Instance Specific Swizzling & Deswizzling
 
 static NSMutableDictionary *dynamicSubclassesByObject;
-
 
 NS_INLINE unsigned int swizzleCount(__unsafe_unretained id object) {
     NSValue *key = [NSValue valueWithPointer:JGBridgeCast(const void *, object)];
@@ -494,7 +495,6 @@ NS_INLINE void decreaseSwizzleCount(__unsafe_unretained id object) {
     
     classDict[kCountKey] = @(count-1);
 }
-
 
 NS_INLINE BOOL deswizzleInstance(__unsafe_unretained id object) {
     OSSpinLockLock(&lock);
@@ -702,7 +702,9 @@ NS_INLINE void swizzleInstance(__unsafe_unretained id object, SEL selector, JGMe
 
 
 
-FOUNDATION_EXTERN BOOL deswizzleGlobal() {
+#pragma mark - Public functions
+
+BOOL deswizzleGlobal() {
     BOOL success = NO;
     OSSpinLockLock(&lock);
     NSDictionary *d = originalClassMethods.copy;
@@ -733,7 +735,7 @@ FOUNDATION_EXTERN BOOL deswizzleGlobal() {
 }
 
 
-FOUNDATION_EXTERN BOOL deswizzleInstances() {
+BOOL deswizzleInstances() {
     OSSpinLockLock(&lock);
     BOOL success = NO;
     NSDictionary *d = dynamicSubclassesByObject.copy;
@@ -753,7 +755,7 @@ FOUNDATION_EXTERN BOOL deswizzleInstances() {
     return success;
 }
 
-FOUNDATION_EXTERN BOOL deswizzleAll() {
+BOOL deswizzleAll() {
     BOOL a = deswizzleGlobal();
     BOOL b = deswizzleInstances();
     

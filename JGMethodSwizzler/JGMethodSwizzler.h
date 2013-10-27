@@ -21,6 +21,11 @@ typedef id (^JGMethodReplacementProvider)(JG_IMP original, __unsafe_unretained C
 
 
 
+
+//----------------
+/* Deswizzling */
+//----------------
+
 /**
  Deswizzle all methods that have been swizzled accross all instances.
  
@@ -48,8 +53,6 @@ OBJC_EXTERN BOOL deswizzleInstances();
 OBJC_EXTERN BOOL deswizzleAll();
 
 
-
-
 //-----------------
 /* Helper macros */
 //-----------------
@@ -63,7 +66,6 @@ OBJC_EXTERN BOOL deswizzleAll();
 //---------------------------------------
 /** @name Super easy method swizzling */
 //---------------------------------------
-
 
 @interface NSObject (JGMethodSwizzler)
 
@@ -182,7 +184,6 @@ OBJC_EXTERN BOOL deswizzleAll();
  @param replacement The replacement block to use for swizzling the method. Its signature needs to be: return_type ^(id self, ...).
  
  */
-
 - (void)swizzleMethod:(SEL)selector withReplacement:(JGMethodReplacementProvider)replacementProvider;
 
 
