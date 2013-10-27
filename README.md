@@ -100,15 +100,13 @@ All swizzles can be removed once they've been applied.
 `-deswizzle` deswizzles all swizzled instance methods of this instance.
 
 
-
 ##Notes
-JGMethodSwizzler works with both ARC (automatic reference counting) and MRC (manual reference counting).
-#####(MRC support is broken at the moment)
+`JGMethodSwizzler` works with both ARC and MRC/MRR.
 
 ##License
 Licensed under the MIT license.
 
 ##Credits
-JGMethodSwizzler has been created by Jonas Gessner.
+Created by Jonas Gessner.
 
 Thanks to Andrew Richardson for his inspiration and contribution with `InstanceHook`.

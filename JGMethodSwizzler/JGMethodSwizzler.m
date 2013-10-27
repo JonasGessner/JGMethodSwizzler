@@ -11,6 +11,26 @@
 #import <objc/runtime.h>
 #import <libkern/OSAtomic.h>
 
+
+#ifdef __clang__
+#if __has_feature(objc_arc)
+#define JG_ARC_ENABLED
+#endif
+#endif
+
+#ifdef JG_ARC_ENABLED
+#define JGBridgeCast(type, obj) ((__bridge type)obj)
+#define releaseIfNecessary(object)
+#else
+#define JGBridgeCast(type, obj) ((type)obj)
+#define releaseIfNecessary(object) [object release];
+#endif
+
+
+#define kClassKey @"k"
+#define kCountKey @"c"
+#define kIMPKey @"i"
+
 // See http://clang.llvm.org/docs/Block-ABI-Apple.html#high-level
 struct Block_literal_1 {
     void *isa; // initialized to &_NSConcreteStackBlock or &_NSConcreteGlobalBlock
@@ -41,7 +61,7 @@ typedef int BlockFlags;
 #pragma mark - Helpers
 
 NS_INLINE const char *blockGetType(id block) {
-    struct Block_literal_1 *blockRef = (__bridge struct Block_literal_1 *)block;
+    struct Block_literal_1 *blockRef = JGBridgeCast(struct Block_literal_1 *, block);
     BlockFlags flags = blockRef->flags;
     
     if (flags & BLOCK_HAS_SIGNATURE) {
@@ -60,6 +80,8 @@ NS_INLINE const char *blockGetType(id block) {
     
     return NULL;
 }
+
+
 
 NS_INLINE BOOL blockIsCompatibleWithMethodType(id block, __unsafe_unretained Class class, SEL selector, BOOL instanceMethod) {
     const char *blockType = blockGetType(block);
@@ -137,15 +159,22 @@ NS_INLINE void classSwizzleMethod(Class cls, Method method, IMP newImp) {
 
 
 
+
+
 #pragma mark - Original Implementations
+
+
+
+static OSSpinLock lock = OS_SPINLOCK_INIT;
 
 static NSMutableDictionary *originalClassMethods;
 
 static JG_IMP originalClassMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        originalClassMethods = [NSMutableDictionary dictionary];
-    });
+    NSCAssert(!OSSpinLockTry(&lock), @"Spin Lock is not locked");
+    
+    if (!originalClassMethods) {
+        originalClassMethods = [[NSMutableDictionary alloc] init];
+    }
     
     NSString *classKey = NSStringFromClass(class);
     NSString *selectorKey = NSStringFromSelector(selector);
@@ -184,6 +213,11 @@ static JG_IMP originalClassMethodImplementation(__unsafe_unretained Class class,
         [originalClassMethods removeObjectForKey:classKey];
     }
     
+    if (originalClassMethods.count == 0) {
+        releaseIfNecessary(originalClassMethods);
+        originalClassMethods = nil;
+    }
+    
     return orig;
 }
 
@@ -191,10 +225,11 @@ static JG_IMP originalClassMethodImplementation(__unsafe_unretained Class class,
 static NSMutableDictionary *originalInstanceMethods;
 
 static JG_IMP originalInstanceMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        originalInstanceMethods = [NSMutableDictionary dictionary];
-    });
+    NSCAssert(!OSSpinLockTry(&lock), @"Spin Lock is not locked");
+    
+    if (!originalInstanceMethods) {
+        originalInstanceMethods = [[NSMutableDictionary alloc] init];
+    }
     
     NSString *classKey = NSStringFromClass(class);
     NSString *selectorKey = NSStringFromSelector(selector);
@@ -231,14 +266,82 @@ static JG_IMP originalInstanceMethodImplementation(__unsafe_unretained Class cla
         [originalInstanceMethods removeObjectForKey:classKey];
     }
     
+    if (originalInstanceMethods.count == 0) {
+        releaseIfNecessary(originalInstanceMethods);
+        originalInstanceMethods = nil;
+    }
+    
     return orig;
 }
 
 
 
+static NSMutableDictionary *originalInstanceInstanceMethods;
 
+static JG_IMP originalInstanceInstanceMethodImplementation(__unsafe_unretained Class class, SEL selector, BOOL fetchOnly) {
+    NSCAssert(!OSSpinLockTry(&lock), @"Spin Lock is not locked");
+    
+    if (!originalInstanceInstanceMethods) {
+        originalInstanceInstanceMethods = [[NSMutableDictionary alloc] init];
+    }
+    
+    NSString *classKey = NSStringFromClass(class);
+    NSString *selectorKey = NSStringFromSelector(selector);
+    
+    NSMutableDictionary *instanceSwizzles = originalInstanceInstanceMethods[classKey];
+    
+    if (!instanceSwizzles) {
+        instanceSwizzles = [NSMutableDictionary dictionary];
+        
+        originalInstanceInstanceMethods[classKey] = instanceSwizzles;
+    }
+    
+    JG_IMP orig = NULL;
 
-static OSSpinLock lock = OS_SPINLOCK_INIT;
+    if (fetchOnly) {
+        NSMutableDictionary *dict = instanceSwizzles[selectorKey];
+        if (!dict) {
+            return NULL;
+        }
+        NSValue *pointerValue = dict[kIMPKey];
+        orig = [pointerValue pointerValue];
+        unsigned int count = [dict[kCountKey] unsignedIntValue];
+        if (count == 1) {
+            [instanceSwizzles removeObjectForKey:selectorKey];
+            if (instanceSwizzles.count == 0) {
+                [originalInstanceInstanceMethods removeObjectForKey:classKey];
+            }
+        }
+        else {
+            dict[kCountKey] = @(count-1);
+        }
+    }
+    else {
+        NSMutableDictionary *dict = instanceSwizzles[selectorKey];
+        if (!dict) {
+            dict = [NSMutableDictionary dictionaryWithCapacity:2];
+            dict[kCountKey] = @(1);
+            
+            orig = (JG_IMP)[class instanceMethodForSelector:selector];
+            dict[kIMPKey] = [NSValue valueWithPointer:orig];
+            
+            instanceSwizzles[selectorKey] = dict;
+        }
+        else {
+            orig = [dict[kIMPKey] pointerValue];
+            
+            unsigned int count = [dict[kCountKey] unsignedIntValue];
+            dict[kCountKey] = @(count+1);
+        }
+    }
+    
+    if (originalInstanceInstanceMethods.count == 0) {
+        releaseIfNecessary(originalInstanceInstanceMethods);
+        originalInstanceInstanceMethods = nil;
+    }
+    
+    return orig;
+}
 
 
 
@@ -279,7 +382,8 @@ NS_INLINE BOOL deswizzleInstanceMethod(__unsafe_unretained Class class, SEL sele
 NS_INLINE BOOL deswizzleAllClassMethods(__unsafe_unretained Class class) {
     OSSpinLockLock(&lock);
     BOOL success = NO;
-    for (NSString *sel in [originalClassMethods[NSStringFromClass(class)] copy]) {
+    NSDictionary *d = [originalClassMethods[NSStringFromClass(class)] copy];
+    for (NSString *sel in d) {
         OSSpinLockUnlock(&lock);
         if (deswizzleClassMethod(class, NSSelectorFromString(sel))) {
             success = YES;
@@ -287,6 +391,7 @@ NS_INLINE BOOL deswizzleAllClassMethods(__unsafe_unretained Class class) {
         OSSpinLockLock(&lock);
     }
     OSSpinLockUnlock(&lock);
+    releaseIfNecessary(d);
     return success;
 }
 
@@ -294,7 +399,8 @@ NS_INLINE BOOL deswizzleAllClassMethods(__unsafe_unretained Class class) {
 NS_INLINE BOOL deswizzleAllInstanceMethods(__unsafe_unretained Class class) {
     OSSpinLockLock(&lock);
     BOOL success = NO;
-    for (NSString *sel in [originalInstanceMethods[NSStringFromClass(class)] copy]) {
+    NSDictionary *d = [originalInstanceMethods[NSStringFromClass(class)] copy];
+    for (NSString *sel in d) {
         OSSpinLockUnlock(&lock);
         if (deswizzleInstanceMethod(class, NSSelectorFromString(sel))) {
             success = YES;
@@ -302,6 +408,7 @@ NS_INLINE BOOL deswizzleAllInstanceMethods(__unsafe_unretained Class class) {
         OSSpinLockLock(&lock);
     }
     OSSpinLockUnlock(&lock);
+    releaseIfNecessary(d);
     return success;
 }
 
@@ -313,7 +420,6 @@ NS_INLINE void swizzleClassMethod(__unsafe_unretained Class class, SEL selector,
     
     NSCAssert([class respondsToSelector:selector], @"Invalid method: +[%@ %@]", NSStringFromClass(class), NSStringFromSelector(selector));
     
-    
     OSSpinLockLock(&lock);
     
     Method originalMethod = class_getClassMethod(class, selector);
@@ -321,7 +427,6 @@ NS_INLINE void swizzleClassMethod(__unsafe_unretained Class class, SEL selector,
     JG_IMP orig = originalClassMethodImplementation(class, selector, NO);
     
     id replaceBlock = replacement(orig, class, selector);
-    
     
     NSCAssert(blockIsCompatibleWithMethodType(replaceBlock, class, selector, NO), @"Invalid method replacement");
     
@@ -338,6 +443,7 @@ NS_INLINE void swizzleInstanceMethod(__unsafe_unretained Class class, SEL select
     
     NSCAssert([class instancesRespondToSelector:selector], @"Invalid method: -[%@ %@]", NSStringFromClass(class), NSStringFromSelector(selector));
     
+    NSCAssert(originalInstanceInstanceMethods[NSStringFromClass(class)][NSStringFromSelector(selector)] == nil, @"Swizzling an instance method that has already been swizzled on a specific instance is not supported");
     
     OSSpinLockLock(&lock);
     
@@ -362,50 +468,27 @@ NS_INLINE void swizzleInstanceMethod(__unsafe_unretained Class class, SEL select
 
 #pragma mark - Instance Swizzling
 
-static NSMutableDictionary *instanceSwizzleCount;
+static NSMutableDictionary *dynamicSubclassesByObject;
+
 
 NS_INLINE unsigned int swizzleCount(__unsafe_unretained id object) {
-    NSValue *key = [NSValue valueWithPointer:(__bridge const void *)(object)];
+    NSValue *key = [NSValue valueWithPointer:JGBridgeCast(const void *, object)];
     
-    unsigned int count = [instanceSwizzleCount[key] unsignedIntValue];
+    unsigned int count = [dynamicSubclassesByObject[key][kCountKey] unsignedIntValue];
     
     return count;
 }
 
-NS_INLINE void increaseSwizzleCount(__unsafe_unretained id object) {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instanceSwizzleCount = [NSMutableDictionary dictionary];
-    });
-    
-    NSValue *key = [NSValue valueWithPointer:(__bridge const void *)(object)];
-    
-    unsigned int count = [instanceSwizzleCount[key] unsignedIntValue];
-    
-    instanceSwizzleCount[key] = @(count+1);
-}
-
-NS_INLINE void eliminateSwizzleCount(__unsafe_unretained id object) {
-    NSValue *key = [NSValue valueWithPointer:(__bridge const void *)(object)];
-    [instanceSwizzleCount removeObjectForKey:key];
-}
-
 NS_INLINE void decreaseSwizzleCount(__unsafe_unretained id object) {
-    NSValue *key = [NSValue valueWithPointer:(__bridge const void *)(object)];
+    NSValue *key = [NSValue valueWithPointer:JGBridgeCast(const void *, object)];
     
-    unsigned int count = [instanceSwizzleCount[key] unsignedIntValue];
+    NSMutableDictionary *classDict = dynamicSubclassesByObject[key];
     
-    if (count == 1) {
-        [instanceSwizzleCount removeObjectForKey:key];
-    }
-    else if (count > 1) {
-        instanceSwizzleCount[key] = @(count-1);
-    }
+    unsigned int count = [classDict[kCountKey] unsignedIntValue];
+    
+    classDict[kCountKey] = @(count-1);
 }
 
-
-
-static NSMutableDictionary *dynamicSubclassesByObject;
 
 NS_INLINE BOOL deswizzleInstance(__unsafe_unretained id object) {
     OSSpinLockLock(&lock);
@@ -419,11 +502,19 @@ NS_INLINE BOOL deswizzleInstance(__unsafe_unretained id object) {
         
         objc_disposeClassPair(dynamicSubclass);
         
-        [originalInstanceMethods removeObjectForKey:NSStringFromClass([object class])];
+        [originalInstanceInstanceMethods removeObjectForKey:NSStringFromClass([object class])];
         
-        [dynamicSubclassesByObject removeObjectForKey:[NSValue valueWithPointer:(__bridge const void *)(object)]];
+        [dynamicSubclassesByObject removeObjectForKey:[NSValue valueWithPointer:JGBridgeCast(const void *, object)]];
         
-        eliminateSwizzleCount(object);
+        if (!dynamicSubclassesByObject.count) {
+            releaseIfNecessary(dynamicSubclassesByObject);
+            dynamicSubclassesByObject = nil;
+        }
+        
+        if (!originalInstanceInstanceMethods.count) {
+            releaseIfNecessary(originalInstanceInstanceMethods);
+            originalInstanceInstanceMethods = nil;
+        }
         
         success = YES;
     }
@@ -445,7 +536,7 @@ NS_INLINE BOOL deswizzleMethod(__unsafe_unretained id object, SEL selector) {
         return deswizzleInstance(object);
     }
     else if (count > 1) {
-        JG_IMP originalIMP = originalInstanceMethodImplementation([object class], selector, YES);
+        JG_IMP originalIMP = originalInstanceInstanceMethodImplementation([object class], selector, YES);
         if (originalIMP) {
             method_setImplementation(class_getInstanceMethod(object_getClass(object), selector), (IMP)originalIMP);
             
@@ -468,28 +559,36 @@ NS_INLINE void swizzleInstance(__unsafe_unretained id object, SEL selector, JGMe
     
     NSCAssert([object respondsToSelector:selector], @"Invalid method: -[%@ %@]", NSStringFromClass(class), NSStringFromSelector(selector));
     
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		dynamicSubclassesByObject = [NSMutableDictionary dictionary];
-	});
+    OSSpinLockLock(&lock);
     
-	OSSpinLockLock(&lock);
-	
-	Class newClass = [dynamicSubclassesByObject[[NSValue valueWithPointer:(__bridge const void *)(object)]] pointerValue];
+	if (!dynamicSubclassesByObject) {
+		dynamicSubclassesByObject = [[NSMutableDictionary alloc] init];
+	};
     
-	if (!newClass) {
+    NSValue *key = [NSValue valueWithPointer:JGBridgeCast(const void *, object)];
+    
+    NSMutableDictionary *classDict = dynamicSubclassesByObject[key];
+    
+	Class newClass = [classDict[kClassKey] pointerValue];
+    
+	if (!classDict || !newClass) {
         NSString *dynamicSubclass = [NSStringFromClass(class) stringByAppendingFormat:@"_JGMS_%@", [[NSUUID UUID] UUIDString]];
 		
         const char *newClsName = [dynamicSubclass UTF8String];
         
-        NSCAssert(!objc_lookUpClass(newClsName), @"Class %s already exists!\n", newClsName);
+        NSCAssert(!objc_lookUpClass(newClsName), @"Class %@ already exists!\n", dynamicSubclass);
         
         newClass = objc_allocateClassPair(class, newClsName, 0);
-        NSCAssert(newClass, @"Could not create class %s\n", newClsName);
+        
+        NSCAssert(newClass, @"Could not create class %@\n", dynamicSubclass);
         
         objc_registerClassPair(newClass);
         
-        dynamicSubclassesByObject[[NSValue valueWithPointer:(__bridge const void *)(object)]] = [NSValue valueWithPointer:(__bridge const void *)(newClass)];
+        classDict = [NSMutableDictionary dictionary];
+        classDict[kClassKey] = [NSValue valueWithPointer:JGBridgeCast(const void *, newClass)];
+        classDict[kCountKey] = @(1);
+        
+        dynamicSubclassesByObject[[NSValue valueWithPointer:JGBridgeCast(const void *, object)]] = classDict;
         
         Method classMethod = class_getInstanceMethod(newClass, @selector(class));
         
@@ -498,10 +597,6 @@ NS_INLINE void swizzleInstance(__unsafe_unretained id object, SEL selector, JGMe
         };
         
         classSwizzleMethod(newClass, classMethod, imp_implementationWithBlock(swizzledClass));
-        
-        
-        
-        
         
         SEL deallocSel = sel_getUid("dealloc");
         
@@ -518,20 +613,22 @@ NS_INLINE void swizzleInstance(__unsafe_unretained id object, SEL selector, JGMe
         
         classSwizzleMethod(newClass, dealloc, imp_implementationWithBlock(deallocHandler));
     }
+    else {
+        unsigned int count = [classDict[kCountKey] unsignedIntValue];
+        classDict[kCountKey] = @(count+1);
+    }
     
-    Method origMethod = class_getClassMethod(class, selector);
+    Method origMethod = class_getInstanceMethod(class, selector);
     
-    id replaceBlock = replacementProvider(originalInstanceMethodImplementation(class, selector, NO), class, selector);
+    JG_IMP origIMP = originalInstanceInstanceMethodImplementation([object class], selector, NO);
+    
+    id replaceBlock = replacementProvider(origIMP, class, selector);
     
     NSCAssert(blockIsCompatibleWithMethodType(replaceBlock, class, selector, YES), @"Invalid method replacement");
     
     classSwizzleMethod(newClass, origMethod, imp_implementationWithBlock(replaceBlock));
     
-    
-    
     object_setClass(object, newClass);
-	
-    increaseSwizzleCount(object);
     
 	OSSpinLockUnlock(&lock);
 }
@@ -602,7 +699,8 @@ NS_INLINE void swizzleInstance(__unsafe_unretained id object, SEL selector, JGMe
 FOUNDATION_EXTERN BOOL deswizzleGlobal() {
     BOOL success = NO;
     OSSpinLockLock(&lock);
-    for (NSString *classKey in originalClassMethods.copy) {
+    NSDictionary *d = originalClassMethods.copy;
+    for (NSString *classKey in d) {
         OSSpinLockUnlock(&lock);
         BOOL ok = [NSClassFromString(classKey) deswizzleAllMethods];
         OSSpinLockLock(&lock);
@@ -611,7 +709,8 @@ FOUNDATION_EXTERN BOOL deswizzleGlobal() {
         }
     }
     
-    for (NSString *classKey in originalInstanceMethods.copy) {
+    NSDictionary *d1 = originalInstanceMethods.copy;
+    for (NSString *classKey in d1) {
         OSSpinLockUnlock(&lock);
         BOOL ok = [NSClassFromString(classKey) deswizzleAllMethods];
         OSSpinLockLock(&lock);
@@ -621,6 +720,9 @@ FOUNDATION_EXTERN BOOL deswizzleGlobal() {
     }
     OSSpinLockUnlock(&lock);
     
+    releaseIfNecessary(d);
+    releaseIfNecessary(d1);
+    
     return success;
 }
 
@@ -628,7 +730,8 @@ FOUNDATION_EXTERN BOOL deswizzleGlobal() {
 FOUNDATION_EXTERN BOOL deswizzleInstances() {
     OSSpinLockLock(&lock);
     BOOL success = NO;
-    for (NSValue *pointer in instanceSwizzleCount.copy) {
+    NSDictionary *d = dynamicSubclassesByObject.copy;
+    for (NSValue *pointer in d) {
         id object = [pointer pointerValue];
         OSSpinLockUnlock(&lock);
         BOOL ok = [object deswizzle];
@@ -638,6 +741,8 @@ FOUNDATION_EXTERN BOOL deswizzleInstances() {
         }
     }
     OSSpinLockUnlock(&lock);
+    
+    releaseIfNecessary(d);
     
     return success;
 }
@@ -651,7 +756,7 @@ FOUNDATION_EXTERN BOOL deswizzleAll() {
 
 //For debugging purposes:
 //NSString *getStatus() {
-//    return [NSString stringWithFormat:@"Original Class:\n%@\n\n\nOriginal Instance:\n%@\n\n\nSwizzle Count:\n%@\n\n\nDynamic Subclasses:\n%@\n\n\n", originalClassMethods, originalInstanceMethods, instanceSwizzleCount, dynamicSubclassesByObject];
+//    return [NSString stringWithFormat:@"Original Class:\n%@\n\n\nOriginal Instance:\n%@\n\n\nOriginal Instance Specific:\n%@\n\n\nDynamic Subclasses:\n%@\n\n\n", originalClassMethods, originalInstanceMethods, originalInstanceInstanceMethods, dynamicSubclassesByObject];
 //}
 
 

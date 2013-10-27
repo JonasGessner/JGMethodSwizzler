@@ -27,7 +27,7 @@ typedef id (^JGMethodReplacementProvider)(JG_IMP original, __unsafe_unretained C
  @return \c YES if any methods have been deswizzled successfully.
  */
 
-FOUNDATION_EXTERN BOOL deswizzleGlobal();
+OBJC_EXTERN BOOL deswizzleGlobal();
 
 
 /**
@@ -36,7 +36,7 @@ FOUNDATION_EXTERN BOOL deswizzleGlobal();
  @return \c YES if any methods have been deswizzled successfully.
  */
 
-FOUNDATION_EXTERN BOOL deswizzleInstances();
+OBJC_EXTERN BOOL deswizzleInstances();
 
 
 /**
@@ -45,7 +45,7 @@ FOUNDATION_EXTERN BOOL deswizzleInstances();
  @return \c YES if any methods have been deswizzled successfully.
  */
 
-FOUNDATION_EXTERN BOOL deswizzleAll();
+OBJC_EXTERN BOOL deswizzleAll();
 
 
 
