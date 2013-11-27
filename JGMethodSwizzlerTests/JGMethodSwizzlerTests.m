@@ -40,9 +40,9 @@
 - (NSObject *)applySwizzles {
     int add = arc4random_uniform(50);
     
-    [self.class swizzleInstanceMethod:@selector(a:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int b) {
-            int orig = JGCastOriginal(int, b);
+    [self.class swizzleInstanceMethod:@selector(a:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int b) {
+            int orig = JGOriginalImplementation(int, b);
             return orig+add;
         };
     }];
@@ -53,9 +53,9 @@
     
     XCTAssert(aa == yoo-2+add, @"Integer calculation mismatch");
     
-    [self.class swizzleClassMethod:@selector(testRect) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(CGRect, const Class *) {
-            CGRect orig = JGCastOriginal(CGRect);
+    [self.class swizzleClassMethod:@selector(testRect) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(CGRect, const Class *) {
+            CGRect orig = JGOriginalImplementation(CGRect);
             
             return CGRectInset(orig, -5.0f, -5.0f);
         };
@@ -64,9 +64,9 @@
     
     XCTAssert(CGRectEqualToRect([self.class testRect], CGRectInset(CGRectMake(0.0f, 1.0f, 2.0f, 3.0f), -5.0f, -5.0f)), @"CGRect swizzling failed");
     
-    [self.class swizzleClassMethod:@selector(testRect2:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(CGRect, const Class *, CGRect rect) {
-            CGRect orig = JGCastOriginal(CGRect, rect);
+    [self.class swizzleClassMethod:@selector(testRect2:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(CGRect, const Class *, CGRect rect) {
+            CGRect orig = JGOriginalImplementation(CGRect, rect);
             
             return CGRectInset(orig, -5.0f, -5.0f);
         };
@@ -81,9 +81,9 @@
     NSObject *object = [NSObject new];
     
     
-    [object swizzleMethod:@selector(description) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(NSString *, NSObject *) {
-            NSString *orig = JGCastOriginal(NSString *);
+    [object swizzleMethod:@selector(description) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(NSString *, NSObject *) {
+            NSString *orig = JGOriginalImplementation(NSString *);
             
             return [orig stringByAppendingString:@"Only swizzled this instance"];
         };
@@ -91,9 +91,9 @@
     
     XCTAssert([[object description] hasSuffix:@"Only swizzled this instance"] && ![[[NSObject new] description] hasSuffix:@"Only swizzled this instance"], @"Instance swizzling failed");
     
-    [object swizzleMethod:@selector(init) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(id, NSObject *) {
-            id orig = JGCastOriginal(id);
+    [object swizzleMethod:@selector(init) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(id, NSObject *) {
+            id orig = JGOriginalImplementation(id);
             
             return orig;
         };
@@ -359,17 +359,17 @@
 }
 
 - (void)testGlobalAndInstanceSwizzlingCombination1 {
-    [self.class swizzleInstanceMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    [self.class swizzleInstanceMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"GLOBAL SWIZZLE");
             return orig+1;
         };
     }];
     
-    [self swizzleMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    [self swizzleMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"ISTANCE SWIZZLE");
             return orig+1;
         };
@@ -391,18 +391,18 @@
 
 - (void)testGlobalAndInstanceSwizzlingCombination2 {
     NSLog(@"Example for why global and instance swizzling is not a good combination");
-    [self swizzleMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    [self swizzleMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"ISTANCE SWIZZLE");
             return orig+1;
         };
     }];
     
     //This swizzle would get put between the instance swizzle and the original method implementation. The instance specific swizzle however would not know that this happened and this swizzle would never be invoked on this specific instance. Therefore it throws an exception.
-    XCTAssertThrows([self.class swizzleInstanceMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    XCTAssertThrows([self.class swizzleInstanceMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"GLOBAL SWIZZLE");
             return orig+1;
         };
@@ -424,18 +424,18 @@
 
 - (void)testGlobalAndInstanceSwizzlingCombination3 {
     NSLog(@"Example for why global and instance swizzling is not a good combination");
-    [self swizzleMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    [self swizzleMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"ISTANCE SWIZZLE");
             return orig+1;
         };
     }];
     
     //This swizzle would get put between the instance swizzle and the original method implementation. The instance specific swizzle however would not know that this happened and this swizzle would never be invoked on this specific instance. Therefore it throws an exception.
-    XCTAssertThrows([self.class swizzleInstanceMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    XCTAssertThrows([self.class swizzleInstanceMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"GLOBAL SWIZZLE");
             return orig+1;
         };
@@ -457,17 +457,17 @@
 
 
 - (void)testGlobalAndInstanceSwizzlingCombination4 {
-    [self.class swizzleInstanceMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    [self.class swizzleInstanceMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"GLOBAL SWIZZLE");
             return orig+1;
         };
     }];
     
-    [self swizzleMethod:@selector(test:) withReplacement:^ JGMethodReplacementProviderBlock {
-        return ^ JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
-            int orig = JGCastOriginal(int, a);
+    [self swizzleMethod:@selector(test:) withReplacement:JGMethodReplacementProviderBlock {
+        return JGMethodReplacement(int, JGMethodSwizzlerTests *, int a) {
+            int orig = JGOriginalImplementation(int, a);
             NSLog(@"ISTANCE SWIZZLE");
             return orig+1;
         };

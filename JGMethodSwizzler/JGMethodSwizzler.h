@@ -57,9 +57,9 @@ OBJC_EXTERN BOOL deswizzleAll();
 /* Helper macros */
 //-----------------
 
-#define JGMethodReplacement(returntype, selftype, ...) returntype (__unsafe_unretained selftype self, ##__VA_ARGS__)
-#define JGMethodReplacementProviderBlock id (JG_IMP original, __unsafe_unretained Class swizzledClass, SEL _cmd)
-#define JGCastOriginal(type, ...) ((__typeof(type (*)(__typeof(self), SEL, ...)))original)(self, _cmd, ##__VA_ARGS__) //always use JGCastOriginal (unless the return type really is void *)
+#define JGMethodReplacement(returntype, selftype, ...) ^ returntype (__unsafe_unretained selftype self, ##__VA_ARGS__)
+#define JGMethodReplacementProviderBlock ^ id (JG_IMP original, __unsafe_unretained Class swizzledClass, SEL _cmd)
+#define JGOriginalImplementation(type, ...) ((__typeof(type (*)(__typeof(self), SEL, ...)))original)(self, _cmd, ##__VA_ARGS__)
 
 
 

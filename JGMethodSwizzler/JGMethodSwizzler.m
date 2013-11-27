@@ -146,7 +146,7 @@ NS_INLINE BOOL blockIsCompatibleWithMethodType(id block, __unsafe_unretained Cla
 NS_INLINE BOOL blockIsValidReplacementProvider(id block) {
     const char *blockType = blockGetType(block);
     
-    JGMethodReplacementProvider dummy = ^ JGMethodReplacementProviderBlock {
+    JGMethodReplacementProvider dummy = JGMethodReplacementProviderBlock {
         return nil;
     };
     
