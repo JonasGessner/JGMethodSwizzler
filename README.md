@@ -1,4 +1,4 @@
-<h1>JGMethodSwizzler</h1><h6>© 2013-2014 Jonas Gessner</h6>
+<h1>JGMethodSwizzler</h1><h6>© 2013 Jonas Gessner</h6>
 
 ----------------
 <br>
@@ -103,10 +103,10 @@ All swizzles can be removed once they've been applied.
 ##Notes
 `JGMethodSwizzler` works with both ARC and MRC/MRR.
 
-##License
-Licensed under the MIT license.
-
 ##Credits
 Created by Jonas Gessner.
 
 Thanks to Andrew Richardson for his inspiration and contribution with `InstanceHook`.
+
+##License
+Licensed under the MIT license.
