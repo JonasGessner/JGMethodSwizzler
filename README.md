@@ -23,7 +23,7 @@ Swizzling the method `+(int)[TestClass test:(int)]`
 	//return a replacement block
 	return JGMethodReplacement(int, const Class *, int arg) {
 		//get the original value
-		int orig = JGCastOriginal(int, arg);
+		int orig = JGOriginalImplementation(int, arg);
 		//return the modified value
 		return orig+2;
 	};
@@ -40,7 +40,7 @@ Swizzling the method `-(int)[TestClass test:(int)]`
 	//return a replacement block
 	return JGMethodReplacement(int, TestClass *, int arg) {
 		//get the original value
-		int orig = JGCastOriginal(int, arg);
+		int orig = JGOriginalImplementation(int, arg);
 		//return the modified value
 		return orig+2;
 	};
@@ -58,7 +58,7 @@ NSObject *object = [NSObject new];
 
 [object swizzleMethod:@selector(description) withReplacement:JGMethodReplacementProviderBlock {
 	return JGMethodReplacement(NSString *, NSObject *) {
-		NSString *orig = JGCastOriginal(NSString *);
+		NSString *orig = JGOriginalImplementation(NSString *);
             
 		return [orig stringByAppendingString:@" Swizzled!!"];
 	};
