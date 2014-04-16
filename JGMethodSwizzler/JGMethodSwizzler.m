@@ -704,7 +704,8 @@ NS_INLINE void swizzleInstance(__unsafe_unretained id object, SEL selector, JGMe
 
 #pragma mark - Public functions
 
-BOOL deswizzleGlobal() {
+BOOL deswizzleGlobal(void)
+{
     BOOL success = NO;
     OSSpinLockLock(&lock);
     NSDictionary *d = originalClassMethods.copy;
@@ -735,7 +736,8 @@ BOOL deswizzleGlobal() {
 }
 
 
-BOOL deswizzleInstances() {
+BOOL deswizzleInstances(void)
+{
     OSSpinLockLock(&lock);
     BOOL success = NO;
     NSDictionary *d = dynamicSubclassesByObject.copy;
@@ -755,7 +757,8 @@ BOOL deswizzleInstances() {
     return success;
 }
 
-BOOL deswizzleAll() {
+BOOL deswizzleAll(void)
+{
     BOOL a = deswizzleGlobal();
     BOOL b = deswizzleInstances();
     
