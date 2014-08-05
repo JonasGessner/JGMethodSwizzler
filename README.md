@@ -1,12 +1,26 @@
-<h1>JGMethodSwizzler</h1><h6>© 2013 Jonas Gessner</h6>
+<h1>JGMethodSwizzler</h1><h6>© 2013-2014 Jonas Gessner</h6>
 
 ----------------
 <br>
 
-An easy to use Objective-C level API for swizzling class and instance methods, as well as swizzling instance methods on specific instances only.
+An easy to use Objective-C API for swizzling class and instance methods, as well as swizzling instance methods on specific instances only.
 
-##Documentation
+Setup
+=====
+<b>CocoaPods:</b><br>
+Add this to your `Podfile`:
+```
+pod 'JGMethodSwizzler', '2.0.1'
+```
+<p>
+OR:
+<p>
+<b>Add source Files:</b><br>
+1. Add the `JGMethodSwizzler` folder to your Xcode Project.<br>
+2. `#import "JGMethodSwizzler.h"`.
 
+Documentation
+=============
 #####For further examples see the `JGMethodSwizzlerTests` Xcode project.
 
 
@@ -100,13 +114,16 @@ All swizzles can be removed once they've been applied.
 `-deswizzle` deswizzles all swizzled instance methods of this instance.
 
 
-##Notes
+Notes
+=======
 `JGMethodSwizzler` works with both ARC and MRC/MRR.
 
-##Credits
-Created by Jonas Gessner.
+Credits
+=========
+Created by Jonas Gessner. ©2013-2014
 
 Thanks to Andrew Richardson for his inspiration and contribution with `InstanceHook`.
 
-##License
+License
+==========
 Licensed under the MIT license.
