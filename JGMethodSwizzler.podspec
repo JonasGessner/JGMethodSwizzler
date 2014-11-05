@@ -10,7 +10,8 @@ DESC
   s.license      = { :type => "MIT", :file => "LICENSE.txt" }
   s.author             = "Jonas Gessner"
   s.social_media_url   = "http://twitter.com/JonasGessner"
-  s.platform     = :ios, "5.0"
+  s.ios.deployment_target = '5.0'
+  s.osx.deployment_target = '10.8'
   s.source       = { :git => "https://github.com/JonasGessner/JGMethodSwizzler.git", :tag => "v2.0.1" }
   s.source_files  = "JGMethodSwizzler/*.{h,m}"
   s.frameworks = "Foundation"
