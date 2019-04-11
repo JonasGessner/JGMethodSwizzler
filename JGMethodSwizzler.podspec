@@ -1,20 +1,20 @@
-Pod::Spec.new do |s|
+Pod::Spec.new do |spec|
 
-  s.name         = "JGMethodSwizzler"
-  s.version      = "2.0.2"
-  s.summary      = "Powerful and easy to use Objective-C swizzling API."
-  s.description  = <<-DESC
+  spec.name         = "JGMethodSwizzler"
+  spec.version      = "2.0.2"
+  spec.summary      = "Powerful and easy to use Objective-C swizzling API."
+  spec.description  = <<-DESC
 An easy to use Objective-C API for swizzling class and instance methods, as well as swizzling instance methods on specific instances only.
 DESC
-  s.homepage     = "https://github.com/JonasGessner/JGMethodSwizzler"
-  s.license      = { :type => "MIT", :file => "LICENSE.txt" }
-  s.author             = "Jonas Gessner"
-  s.social_media_url   = "http://twitter.com/JonasGessner"
-  s.ios.deployment_target = '9.0'
-  s.osx.deployment_target = '10.8'
-  s.source       = { :git => "https://github.com/JonasGessner/JGMethodSwizzler.git", :tag => spec.version.to_s }
-  s.source_files  = "JGMethodSwizzler/*.{h,m}"
-  s.frameworks = "Foundation"
-  s.requires_arc = false
+  spec.homepage     = "https://github.com/JonasGessner/JGMethodSwizzler"
+  spec.license      = { :type => "MIT", :file => "LICENSE.txt" }
+  spec.author             = "Jonas Gessner"
+  spec.social_media_url   = "http://twitter.com/JonasGessner"
+  spec.iospec.deployment_target = '9.0'
+  spec.osx.deployment_target = '10.8'
+  spec.source       = { :git => "https://github.com/JonasGessner/JGMethodSwizzler.git", :tag => spec.version.to_s }
+  spec.source_files  = "JGMethodSwizzler/*.{h,m}"
+  spec.frameworks = "Foundation"
+  spec.requires_arc = false
 
 end
