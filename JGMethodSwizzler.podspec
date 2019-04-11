@@ -10,7 +10,7 @@ DESC
   spec.license      = { :type => "MIT", :file => "LICENSE.txt" }
   spec.author             = "Jonas Gessner"
   spec.social_media_url   = "http://twitter.com/JonasGessner"
-  spec.iospec.deployment_target = '9.0'
+  spec.ios.deployment_target = '9.0'
   spec.osx.deployment_target = '10.8'
   spec.source       = { :git => "https://github.com/JonasGessner/JGMethodSwizzler.git", :tag => spec.version.to_s }
   spec.source_files  = "JGMethodSwizzler/*.{h,m}"
